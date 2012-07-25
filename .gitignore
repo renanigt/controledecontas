@@ -1,0 +1,5 @@
+*.class
+WebContent/WEB-INF/classes/
+.metadata
+target/
+bin
