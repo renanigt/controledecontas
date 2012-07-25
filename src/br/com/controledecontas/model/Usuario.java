@@ -30,7 +30,7 @@ public class Usuario {
 	private String password;
 	
 	@OneToMany
-	@JoinColumn(name="USUARIO_ID")
+	@JoinColumn(name="USUARIO_ID", nullable=false)
 	private List<Conta> contas;
 
 	public Integer getId() {
