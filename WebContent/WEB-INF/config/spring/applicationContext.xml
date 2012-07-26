@@ -26,7 +26,7 @@
 			<tx:method name="find*" read-only="true" />
 			<tx:method name="count*" read-only="true" />
 			<tx:method name="get*" read-only="true" />
-			<tx:method name="busca*" read-only="true" />
+			<tx:method name="pesquisa*" read-only="true" />
 			<tx:method name="lista*" read-only="true" />
 			<!-- other methods use the default transaction settings (see below) -->
 			<tx:method name="*" propagation="REQUIRED" />
