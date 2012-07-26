@@ -4,6 +4,8 @@ import br.com.controledecontas.model.Conta;
 
 public interface ContaService {
 
-	Conta buscarPorId(Integer id);
+	Conta pesquisaPorId(Integer id);
+
+	void salva(Conta conta);
 
 }

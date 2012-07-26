@@ -14,8 +14,12 @@ public class ContaServiceImpl implements ContaService {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public Conta buscarPorId(Integer id) {
+	public Conta pesquisaPorId(Integer id) {
 		return entityManager.find(Conta.class, id);
+	}
+
+	public void salva(Conta conta) {
+		entityManager.persist(conta);
 	}
 
 }

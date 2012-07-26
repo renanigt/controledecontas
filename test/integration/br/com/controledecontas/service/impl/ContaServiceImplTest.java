@@ -1,7 +1,13 @@
 package br.com.controledecontas.service.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import base.dbunit.DbUnitManager;
 import br.com.controdecontas.service.ContaService;
+import br.com.controdecontas.service.UsuarioService;
 import br.com.controledecontas.model.Conta;
+import br.com.controledecontas.model.TipoConta;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -25,13 +33,19 @@ public class ContaServiceImplTest {
 
 	private static final String DATASET = "test/integration/base/dbunit/xml/ContaServiceImplTest.xml";
 	
-	private static final Integer ID_VALIDO = 9999;
-	private static final Integer ID_INVALIDO = -1;
+	private static final Integer ID_VALIDO_CONTA = 9999;
+	private static final Integer ID_INVALIDO_CONTA = -1;
+	
+	private static final Integer ID_VALIDO_USUARIO = 9998;
 	
 	@Autowired
 	DbUnitManager dbUnitManager;
 	@Autowired
 	ContaService contaService;
+	@Autowired
+	UsuarioService usuarioService;
+
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@Before
 	public void setup() {
@@ -39,13 +53,42 @@ public class ContaServiceImplTest {
 	}
 
 	@Test
-	public void deveriaBuscarContaPorId() {
-		Conta contaIdExistente = contaService.buscarPorId(ID_VALIDO);
-		Conta contaIdInexistente = contaService.buscarPorId(ID_INVALIDO);
+	public void deveriaPesquisarContaPorId() {
+		Conta contaIdExistente = contaService.pesquisaPorId(ID_VALIDO_CONTA);
+		Conta contaIdInexistente = contaService.pesquisaPorId(ID_INVALIDO_CONTA);
 		
 		assertNotNull("Conta existente", contaIdExistente);
 		assertNull("Conta inexistente", contaIdInexistente);
-		
 	}
 	
+	@Test
+	public void deveriaSalvarConta() {
+		Conta conta = criaConta();
+		
+		contaService.salva(conta);
+		
+		Conta contaSalva = contaService.pesquisaPorId(conta.getId());
+		
+		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 25);
+		
+		assertEquals("Data", dateFormat.format(dataConta.getTime()), dateFormat.format(contaSalva.getData()));
+		assertEquals("Descrição", "Supermercado", contaSalva.getDescricao());
+		assertEquals("Tipo de Conta", TipoConta.Debito, contaSalva.getTipoConta());
+		assertEquals("Valor", new BigDecimal("13.43"), contaSalva.getValor());
+		assertEquals("ID Usuário", new Integer(9998), contaSalva.getUsuario().getId());
+	}
+	
+	public Conta criaConta() {
+		Conta conta = new Conta();
+		GregorianCalendar data = new GregorianCalendar(2012, Calendar.JULY, 25);
+		
+		conta.setData(data.getTime());
+		conta.setDescricao("Supermercado");
+		conta.setTipoConta(TipoConta.Debito);
+		conta.setValor(new BigDecimal("13.43"));
+		conta.setUsuario(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO));
+		
+		return conta;
+	}
+
 }

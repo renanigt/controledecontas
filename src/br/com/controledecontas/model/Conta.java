@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +33,10 @@ public class Conta {
 	@Column(name="DATA", nullable=false)
 	private Date data;
 
+	@ManyToOne
+	@JoinColumn(name="USUARIO_ID", nullable=false)
+	private Usuario usuario;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -69,6 +75,14 @@ public class Conta {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 }
