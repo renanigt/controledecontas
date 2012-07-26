@@ -36,7 +36,7 @@
 	<!-- Configuração do Aspecto das transações. -->
 	<aop:config>
 		<aop:pointcut id="serviceMethods"
-			expression="execution(* br.com.sharedpaint.service..*.*(..))" />
+			expression="execution(* br.com.controledecontas.service..*.*(..))" />
 		<aop:advisor order="2" advice-ref="txAdvice"
 			pointcut-ref="serviceMethods" />
 	</aop:config>
