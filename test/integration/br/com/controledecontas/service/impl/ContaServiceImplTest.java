@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.junit.Before;
@@ -71,11 +72,15 @@ public class ContaServiceImplTest {
 		
 		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 25);
 		
-		assertEquals("Data", dateFormat.format(dataConta.getTime()), dateFormat.format(contaSalva.getData()));
-		assertEquals("Descrição", "Supermercado", contaSalva.getDescricao());
-		assertEquals("Tipo de Conta", TipoConta.Debito, contaSalva.getTipoConta());
-		assertEquals("Valor", new BigDecimal("13.43"), contaSalva.getValor());
-		assertEquals("ID Usuário", new Integer(9998), contaSalva.getUsuario().getId());
+		verificaDadosConta(contaSalva, dataConta.getTime(), "Supermercado", TipoConta.Debito, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
+	}
+	
+	public void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
+		assertEquals("Data", dateFormat.format(data), dateFormat.format(conta.getData()));
+		assertEquals("Descrição", descricao, conta.getDescricao());
+		assertEquals("Tipo de Conta", tipoDeConta, conta.getTipoConta());
+		assertEquals("Valor", valor, conta.getValor());
+		assertEquals("ID Usuário", idUsuario, conta.getUsuario().getId());
 	}
 	
 	public Conta criaConta() {
