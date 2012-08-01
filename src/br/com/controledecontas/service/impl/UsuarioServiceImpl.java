@@ -17,5 +17,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario pesquisaPorId(Integer id) {
 		return entityManager.find(Usuario.class, id);
 	}
+
+	public void salva(Usuario usuario) {
+		entityManager.persist(usuario);
+	}
 	
 }

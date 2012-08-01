@@ -6,4 +6,6 @@ public interface UsuarioService {
 
 	Usuario pesquisaPorId(Integer id);
 
+	void salva(Usuario usuario);
+
 }
