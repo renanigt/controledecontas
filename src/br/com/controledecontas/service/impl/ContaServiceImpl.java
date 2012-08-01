@@ -5,8 +5,8 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Service;
 
-import br.com.controdecontas.service.ContaService;
 import br.com.controledecontas.model.Conta;
+import br.com.controledecontas.service.ContaService;
 
 @Service("contaService")
 public class ContaServiceImpl implements ContaService {

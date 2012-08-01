@@ -13,8 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import base.dbunit.DbUnitManager;
-import br.com.controdecontas.service.UsuarioService;
 import br.com.controledecontas.model.Usuario;
+import br.com.controledecontas.service.UsuarioService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {

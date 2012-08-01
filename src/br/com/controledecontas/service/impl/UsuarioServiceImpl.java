@@ -5,8 +5,8 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Service;
 
-import br.com.controdecontas.service.UsuarioService;
 import br.com.controledecontas.model.Usuario;
+import br.com.controledecontas.service.UsuarioService;
 
 @Service("usuarioService")
 public class UsuarioServiceImpl implements UsuarioService {
