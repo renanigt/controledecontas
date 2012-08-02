@@ -58,8 +58,8 @@ public class ContaServiceImplTest {
 		Conta contaIdExistente = contaService.pesquisaPorId(ID_VALIDO_CONTA);
 		Conta contaIdInexistente = contaService.pesquisaPorId(ID_INVALIDO_CONTA);
 		
-		assertNotNull("Conta existente", contaIdExistente);
-		assertNull("Conta inexistente", contaIdInexistente);
+		assertNotNull("Conta não deve ser nula", contaIdExistente);
+		assertNull("Conta deve ser nula", contaIdInexistente);
 	}
 	
 	@Test
@@ -73,6 +73,35 @@ public class ContaServiceImplTest {
 		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 25);
 		
 		verificaDadosConta(contaSalva, dataConta.getTime(), "Supermercado", TipoConta.Debito, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
+	}
+	
+	@Test
+	public void deveriaRemoverConta() {
+		Conta conta = contaService.pesquisaPorId(ID_VALIDO_CONTA);
+		
+		contaService.deleta(conta);
+		
+		Conta contaRemovida = contaService.pesquisaPorId(ID_VALIDO_CONTA);
+		
+		assertNull("Conta deve ser nula", contaRemovida);
+	}
+	
+	@Test
+	public void deveriaAtualizarConta() {
+		Conta conta = contaService.pesquisaPorId(ID_VALIDO_CONTA);
+		
+		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 28);
+		
+		conta.setDescricao("Recebido pagamento.");
+		conta.setTipoConta(TipoConta.Credito);
+		conta.setData(dataConta.getTime());
+		conta.setValor(new BigDecimal("30.00"));
+		
+		contaService.atualiza(conta);
+		
+		Conta contaAtualizada = contaService.pesquisaPorId(ID_VALIDO_CONTA);
+		
+		verificaDadosConta(contaAtualizada, dataConta.getTime(), "Recebido pagamento.", TipoConta.Credito, new BigDecimal("30.00"), ID_VALIDO_USUARIO);
 	}
 	
 	public void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {

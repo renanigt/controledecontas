@@ -22,4 +22,12 @@ public class ContaServiceImpl implements ContaService {
 		entityManager.persist(conta);
 	}
 
+	public void deleta(Conta conta) {
+		entityManager.remove(conta);
+	}
+
+	public void atualiza(Conta conta) {
+		entityManager.merge(conta);
+	}
+
 }

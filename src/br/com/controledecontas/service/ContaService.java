@@ -8,4 +8,8 @@ public interface ContaService {
 
 	void salva(Conta conta);
 
+	void deleta(Conta conta);
+
+	void atualiza(Conta conta);
+
 }
