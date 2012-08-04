@@ -45,7 +45,7 @@ public class UsuarioController {
 		result.forwardTo(IndexController.class).index();
 	}
 	
-	public void validaCamposObrigatorios(final Usuario usuario) {
+	private void validaCamposObrigatorios(final Usuario usuario) {
 		validator.checking(new Validations() {{
 			that(!usuario.getNome().isEmpty(), "Nome", "O campo nome não pode ser vazio.");
 			that(!usuario.getUsername().isEmpty(), "Username", "O campo username não pode ser vazio.");
