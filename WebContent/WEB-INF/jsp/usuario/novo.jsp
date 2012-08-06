@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Adicionar usuário !</title>
 </head>
 <body>
 	<form action="<c:url value="/usuario/novo/salvar" />" name="form_usuario" method="post">
