@@ -48,8 +48,8 @@ public class UsuarioControllerTest {
 		
 		verify(usuarioService).salva(usuario);
 		
-		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
 		assertTrue("Não deve conter erros.", result.included().containsKey("notice"));
+		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
 	}
 	
 	@Test(expected = ValidationException.class)
