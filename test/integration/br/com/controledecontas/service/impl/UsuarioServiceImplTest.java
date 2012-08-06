@@ -61,6 +61,16 @@ public class UsuarioServiceImplTest {
 		assertEquals("Password", "123", usuarioSalvo.getPassword());
 	}
 	
+	@Test
+	public void deveriaValidarUsuario() {
+		Usuario usuario = usuarioService.valida("renanigt", "123");
+		
+		assertNotNull("Usuário não deve ser nulo.", usuario);
+		assertEquals("Nome", "RENAN MONTENEGRO", usuario.getNome());
+		assertEquals("Username", "RENANIGT", usuario.getUsername());
+		assertEquals("Password", "123", usuario.getPassword());
+	}
+	
 	public Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		

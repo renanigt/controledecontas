@@ -8,4 +8,6 @@ public interface UsuarioService {
 
 	void salva(Usuario usuario);
 
+	Usuario valida(String username, String password);
+
 }
