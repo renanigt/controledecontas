@@ -103,8 +103,8 @@ public class ContaServiceImplTest {
 		
 		verificaDadosConta(contaAtualizada, dataConta.getTime(), "Recebido pagamento.", TipoConta.Credito, new BigDecimal("30.00"), ID_VALIDO_USUARIO);
 	}
-	
-	public void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
+
+	private void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
 		assertEquals("Data", dateFormat.format(data), dateFormat.format(conta.getData()));
 		assertEquals("Descrição", descricao, conta.getDescricao());
 		assertEquals("Tipo de Conta", tipoDeConta, conta.getTipoConta());
@@ -112,7 +112,7 @@ public class ContaServiceImplTest {
 		assertEquals("ID Usuário", idUsuario, conta.getUsuario().getId());
 	}
 	
-	public Conta criaConta() {
+	private Conta criaConta() {
 		Conta conta = new Conta();
 		GregorianCalendar data = new GregorianCalendar(2012, Calendar.JULY, 25);
 		

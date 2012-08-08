@@ -59,7 +59,7 @@ public class UsuarioControllerTest {
 		usuarioController.salva(usuario);
 	}
 	
-	public Usuario criaUsuario() {
+	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("Felipe Aquino");
@@ -69,7 +69,7 @@ public class UsuarioControllerTest {
 		return usuario;
 	}
 	
-	public Usuario criaUsuarioVazio() {
+	private Usuario criaUsuarioVazio() {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("");

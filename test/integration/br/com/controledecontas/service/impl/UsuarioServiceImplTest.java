@@ -70,8 +70,8 @@ public class UsuarioServiceImplTest {
 		assertEquals("Username", "RENANIGT", usuario.getUsername());
 		assertEquals("Password", "123", usuario.getPassword());
 	}
-	
-	public Usuario criaUsuario() {
+
+	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("Renan Montenegro");
