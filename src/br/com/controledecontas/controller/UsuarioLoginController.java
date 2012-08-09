@@ -4,8 +4,8 @@ import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.SessionScoped;
 import br.com.controledecontas.model.Usuario;
 
-@Component
 @SessionScoped
+@Component
 public class UsuarioLoginController {
 
 	private Usuario usuario;

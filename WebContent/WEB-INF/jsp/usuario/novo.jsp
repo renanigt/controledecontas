@@ -17,7 +17,7 @@
 		</div>
 		<div>
 			<label>Password:</label>
-			<input type="text" name="usuario.password" id="password" size="10" maxlength="10" />
+			<input type="password" name="usuario.password" id="password" size="10" maxlength="10" />
 		</div>
 		<input type="submit" value="Salvar" >
 	</form>
