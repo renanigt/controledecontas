@@ -9,7 +9,7 @@
 	<form action="<c:url value="/login/logar" />" name="form_usuario" method="post">
 		<div>
 			<label>Username:</label>
-			<input type="text" name="username" id="username" size="15" maxlength="15" />
+			<input type="text" name="username" id="username" size="15" maxlength="15" value="${username}" />
 		</div>
 		<div>
 			<label>Password:</label>

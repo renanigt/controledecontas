@@ -42,7 +42,7 @@ public class UsuarioController {
 			result.include("erros", e.getMessage());
 		}
 		
-		result.forwardTo(IndexController.class).index();
+		result.redirectTo(IndexController.class).index();
 	}
 	
 	private void validaCamposObrigatorios(final Usuario usuario) {

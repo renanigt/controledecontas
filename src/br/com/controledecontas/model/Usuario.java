@@ -1,5 +1,6 @@
 package br.com.controledecontas.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,7 +14,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="USUARIO")
-public class Usuario {
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 2214404601933626559L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

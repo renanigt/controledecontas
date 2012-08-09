@@ -37,7 +37,7 @@ public class LoginController {
 			result.redirectTo(IndexController.class).index();
 		} else {
 			result.include("erros", "Usuário ou senha inválidos.");
-			result.forwardTo(this).login();
+			result.redirectTo(this).login();
 		}
 		
 	}
