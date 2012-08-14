@@ -6,6 +6,11 @@
 <title>Adicionar usuário !</title>
 </head>
 <body>
+
+	<span>
+		<c:forEach var="error" items="${errors}"><li>${error.category} - ${error.message}</li></c:forEach>
+	</span>
+
 	<form action="<c:url value="/usuario/novo/salvar" />" name="form_usuario" method="post">
 		<div>
 			<label>Nome:</label>
@@ -19,7 +24,7 @@
 			<label>Password:</label>
 			<input type="password" name="usuario.password" id="password" size="10" maxlength="10" />
 		</div>
-		<input type="submit" value="Salvar" >
+		<input type="submit" value="Salvar" />
 	</form>
 
 </body>
