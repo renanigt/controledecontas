@@ -6,6 +6,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.controledecontas.model.Usuario;
+import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.UsuarioService;
 
 @Resource
@@ -13,9 +14,9 @@ public class LoginController {
 
 	private Result result;
 	private UsuarioService usuarioService;
-	private UsuarioLoginController usuarioLoginController;
+	private UsuarioSession usuarioLoginController;
 	
-	public LoginController(Result result, UsuarioService usuarioService, UsuarioLoginController usuarioLoginController) {
+	public LoginController(Result result, UsuarioService usuarioService, UsuarioSession usuarioLoginController) {
 		this.result = result;
 		this.usuarioService = usuarioService;
 		this.usuarioLoginController = usuarioLoginController;

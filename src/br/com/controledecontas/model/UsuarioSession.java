@@ -1,14 +1,13 @@
-package br.com.controledecontas.controller;
+package br.com.controledecontas.model;
 
 import java.io.Serializable;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.SessionScoped;
-import br.com.controledecontas.model.Usuario;
 
 @SessionScoped
 @Component
-public class UsuarioLoginController implements Serializable {
+public class UsuarioSession implements Serializable {
 
 	private static final long serialVersionUID = -4121350912525357709L;
 	

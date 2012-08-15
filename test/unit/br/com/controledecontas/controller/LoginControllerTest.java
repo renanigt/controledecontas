@@ -13,15 +13,15 @@ import org.mockito.MockitoAnnotations;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.controledecontas.controller.LoginController;
-import br.com.controledecontas.controller.UsuarioLoginController;
 import br.com.controledecontas.model.Usuario;
+import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.UsuarioService;
 
 public class LoginControllerTest {
 	
 	private Result result;
 	private LoginController loginController;
-	private UsuarioLoginController usuarioLoginController;
+	private UsuarioSession usuarioLoginController;
 	
 	@Mock
 	private UsuarioService usuarioService;
@@ -30,7 +30,7 @@ public class LoginControllerTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		result = new MockResult();
-		usuarioLoginController = new UsuarioLoginController();
+		usuarioLoginController = new UsuarioSession();
 		loginController = new LoginController(result, usuarioService, usuarioLoginController);
 	}
 	

@@ -1,4 +1,4 @@
-package br.com.controledecontas.controller;
+package br.com.controledecontas.model;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
@@ -9,14 +9,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.controledecontas.model.Usuario;
+import br.com.controledecontas.model.UsuarioSession;
 
-public class UsuarioLoginControllerTest {
+public class UsuarioSessionTest {
 
-	UsuarioLoginController usuarioLoginController;
+	UsuarioSession usuarioSession;
 	
 	@Before
 	public void setup() {
-		usuarioLoginController = new UsuarioLoginController();
+		usuarioSession = new UsuarioSession();
 	}
 	
 	@Test
@@ -27,20 +28,20 @@ public class UsuarioLoginControllerTest {
 		usuario.setUsername("renaniguatu");
 		usuario.setPassword("teste");
 		
-		usuarioLoginController.setUsuario(usuario);
+		usuarioSession.setUsuario(usuario);
 		
 		assertNotNull("Usuário não deve ser nulo.", usuario);
-		assertTrue("Usuário não deve ser nulo.", usuarioLoginController.isLogado());
+		assertTrue("Usuário não deve ser nulo.", usuarioSession.isLogado());
 	}
 	
 	@Test
 	public void deveriaEfetuarLogout() {
 		logaUsuario();
 		
-		usuarioLoginController.logout();
+		usuarioSession.logout();
 		
-		assertNull("Usuário deve ser nulo.", usuarioLoginController.getUsuario());
-		assertFalse("Usuário deve ser nulo.", usuarioLoginController.isLogado());
+		assertNull("Usuário deve ser nulo.", usuarioSession.getUsuario());
+		assertFalse("Usuário deve ser nulo.", usuarioSession.isLogado());
 	}
 
 	private void logaUsuario() {
@@ -50,7 +51,7 @@ public class UsuarioLoginControllerTest {
 		usuario.setUsername("aquinofb");
 		usuario.setPassword("teste");
 		
-		usuarioLoginController.setUsuario(usuario);
+		usuarioSession.setUsuario(usuario);
 	}
 	
 }
