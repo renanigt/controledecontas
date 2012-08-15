@@ -21,7 +21,7 @@ public class LoginControllerTest {
 	
 	private Result result;
 	private LoginController loginController;
-	private UsuarioSession usuarioLoginController;
+	private UsuarioSession usuarioSession;
 	
 	@Mock
 	private UsuarioService usuarioService;
@@ -30,8 +30,8 @@ public class LoginControllerTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		result = new MockResult();
-		usuarioLoginController = new UsuarioSession();
-		loginController = new LoginController(result, usuarioService, usuarioLoginController);
+		usuarioSession = new UsuarioSession();
+		loginController = new LoginController(result, usuarioService, usuarioSession);
 	}
 	
 	public void deveriaAbrirTelaDeLogin() {
@@ -48,8 +48,8 @@ public class LoginControllerTest {
 		
 		loginController.logar(username, password);
 		
-		assertNotNull("Não deveria ser nulo.", usuarioLoginController.getUsuario());
-		assertTrue("Deveria estar logado.", usuarioLoginController.isLogado());
+		assertNotNull("Não deveria ser nulo.", usuarioSession.getUsuario());
+		assertTrue("Deveria estar logado.", usuarioSession.isLogado());
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
 	}
 	
