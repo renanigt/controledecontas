@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,7 +73,7 @@ public class ContaServiceImplTest {
 		
 		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 25);
 		
-		verificaDadosConta(contaSalva, dataConta.getTime(), "Supermercado", TipoConta.Debito, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contaSalva, dataConta.getTime(), "Supermercado", TipoConta.DEBITO, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
 	}
 	
 	@Test
@@ -93,7 +94,7 @@ public class ContaServiceImplTest {
 		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 28);
 		
 		conta.setDescricao("Recebido pagamento.");
-		conta.setTipoConta(TipoConta.Credito);
+		conta.setTipoConta(TipoConta.CREDITO);
 		conta.setData(dataConta.getTime());
 		conta.setValor(new BigDecimal("30.00"));
 		
@@ -101,9 +102,20 @@ public class ContaServiceImplTest {
 		
 		Conta contaAtualizada = contaService.pesquisaPorId(ID_VALIDO_CONTA);
 		
-		verificaDadosConta(contaAtualizada, dataConta.getTime(), "Recebido pagamento.", TipoConta.Credito, new BigDecimal("30.00"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contaAtualizada, dataConta.getTime(), "Recebido pagamento.", TipoConta.CREDITO, new BigDecimal("30.00"), ID_VALIDO_USUARIO);
 	}
 
+	@Test
+	public void deveriaPesquisarContaPorTipo() {
+		List<Conta>  contas = contaService.pesquisaPorTipo(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), TipoConta.CREDITO);
+		
+		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.AUGUST, 01);
+		
+		assertEquals("Quantidade de contas", 1, contas.size());
+		
+		verificaDadosConta(contas.get(0), dataConta.getTime(), "SALÁRIO", TipoConta.CREDITO, new BigDecimal("800.30"), ID_VALIDO_USUARIO);
+	}
+	
 	private void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
 		assertEquals("Data", dateFormat.format(data), dateFormat.format(conta.getData()));
 		assertEquals("Descrição", descricao, conta.getDescricao());
@@ -118,7 +130,7 @@ public class ContaServiceImplTest {
 		
 		conta.setData(data.getTime());
 		conta.setDescricao("Supermercado");
-		conta.setTipoConta(TipoConta.Debito);
+		conta.setTipoConta(TipoConta.DEBITO);
 		conta.setValor(new BigDecimal("13.43"));
 		conta.setUsuario(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO));
 		
