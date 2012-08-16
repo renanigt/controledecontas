@@ -52,4 +52,20 @@ public class ContaServiceImpl implements ContaService {
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Conta> pesquisaPorMes(Usuario usuario, Integer mes) {
+		if (usuario == null) {
+			return Collections.emptyList();
+		}
+		
+		String hql = "from Conta where usuario_id = :userId and month(data) = :mes order by data";
+		
+		Query query = entityManager.createQuery(hql);
+		
+		query.setParameter("userId", usuario.getId());
+		query.setParameter("mes", mes + 1);
+		
+		return query.getResultList();
+	}
+
 }
