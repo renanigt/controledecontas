@@ -24,7 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		entityManager.persist(usuario);
 	}
 
-	public Usuario valida(String username, String password) {
+	public Usuario autentica(String username, String password) {
 		String hql = "from Usuario where username = :username and password = :password";
 		
 		Query query = entityManager.createQuery(hql);

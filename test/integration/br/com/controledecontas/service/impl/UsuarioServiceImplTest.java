@@ -63,7 +63,7 @@ public class UsuarioServiceImplTest {
 	
 	@Test
 	public void deveriaValidarUsuario() {
-		Usuario usuario = usuarioService.valida("renanigt", "123");
+		Usuario usuario = usuarioService.autentica("renanigt", "123");
 		
 		assertNotNull("Usuário não deve ser nulo.", usuario);
 		assertEquals("Nome", "RENAN MONTENEGRO", usuario.getNome());

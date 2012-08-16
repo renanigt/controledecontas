@@ -59,7 +59,7 @@ public class LoginControllerTest {
 		usuario.setUsername(username);
 		usuario.setPassword(password);
 		
-		when(usuarioService.valida(username, password)).thenReturn(usuario);
+		when(usuarioService.autentica(username, password)).thenReturn(usuario);
 	}
 	
 }

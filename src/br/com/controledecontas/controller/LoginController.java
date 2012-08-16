@@ -31,7 +31,7 @@ public class LoginController {
 	@Post
 	@Path("/login/logar")
 	public void logar(String username, String password) {
-		Usuario usuario = usuarioService.valida(username, password);
+		Usuario usuario = usuarioService.autentica(username, password);
 		
 		if(usuario != null) {
 			usuarioLoginController.setUsuario(usuario);

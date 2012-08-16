@@ -32,8 +32,7 @@ public class Usuario implements Serializable {
 	@Column(name="PASSWORD", nullable=false)
 	private String password;
 	
-	@OneToMany
-	@JoinColumn(name="USUARIO_ID")
+	@OneToMany(mappedBy="usuario")
 	private List<Conta> contas;
 
 	public Integer getId() {
