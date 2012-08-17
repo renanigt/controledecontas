@@ -7,7 +7,7 @@ import br.com.caelum.vraptor.Result;
 @Resource
 public class IndexController {
 
-	Result result;
+	private Result result;
 	
 	public IndexController(Result result) {
 		this.result = result;

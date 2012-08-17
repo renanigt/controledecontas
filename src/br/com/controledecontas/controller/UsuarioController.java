@@ -54,7 +54,7 @@ public class UsuarioController {
 			}
 		}});
 
-		validator.onErrorUse(Results.page()).of(UsuarioController.class).novo();
+		validator.onErrorUse(Results.page()).of(this.getClass()).novo();
 	}
 	
 }
