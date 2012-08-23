@@ -47,11 +47,9 @@ public class UsuarioController {
 	
 	private void validaCamposObrigatorios(final Usuario usuario) {
 		validator.checking(new Validations() {{
-			if(that(usuario.getNome() != null && usuario.getUsername() != null && usuario.getPassword() != null, "Campos Vazios", "Nenhum dos campos podem ser vazio.")) {
-				that(!usuario.getNome().trim().isEmpty(), "Nome", "O campo nome não pode ser vazio.");
-				that(!usuario.getUsername().trim().isEmpty(), "Username", "O campo username não pode ser vazio.");
-				that(!usuario.getPassword().trim().isEmpty(), "Password", "O campo password não pode ser vazio.");
-			}
+			that(!usuario.getNome().trim().isEmpty(), "Nome", "O campo nome não pode ser vazio.");
+			that(!usuario.getUsername().trim().isEmpty(), "Username", "O campo username não pode ser vazio.");
+			that(!usuario.getPassword().trim().isEmpty(), "Password", "O campo password não pode ser vazio.");
 		}});
 
 		validator.onErrorUse(Results.page()).of(this.getClass()).novo();

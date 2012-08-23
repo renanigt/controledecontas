@@ -26,7 +26,7 @@ public class UsuarioSession implements Serializable {
 	}
 
 	public void logout() {
-		usuario = null;
+		this.usuario = null;
 	}
 	
 }
