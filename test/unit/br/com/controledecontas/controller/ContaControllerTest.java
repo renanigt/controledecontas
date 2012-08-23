@@ -85,6 +85,7 @@ public class ContaControllerTest {
 		Conta conta = criaContaVazia();
 		
 		when(usuarioSession.isLogado()).thenReturn(true);
+		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
 		
 		contaController.salvar(conta);
 	}
