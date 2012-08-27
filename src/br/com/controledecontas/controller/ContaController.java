@@ -38,25 +38,18 @@ public class ContaController {
 	@Post
 	@Path("/conta/salvar")
 	public void salvar(Conta conta) {
-		if(usuarioSession.isLogado()) {
-			conta.setUsuario(usuarioSession.getUsuario());
-			
-			validaCamposObrigatorios(conta);
-			
-			try {
-				contaService.salva(conta);
-				result.include("notice", "Conta salva com sucesso!");
-			} catch(Exception e) {
-				result.include("erros", e.getMessage());
-			}
-			
-			result.redirectTo(IndexController.class).index();
-			
-		} else {
-			result.include("erros", "Você não está logado.");
-			result.redirectTo(LoginController.class).login();
+		conta.setUsuario(usuarioSession.getUsuario());
+		
+		validaCamposObrigatorios(conta);
+		
+		try {
+			contaService.salva(conta);
+			result.include("notice", "Conta salva com sucesso!");
+		} catch(Exception e) {
+			result.include("erros", e.getMessage());
 		}
 		
+		result.redirectTo(IndexController.class).index();
 	}
 
 	private void validaCamposObrigatorios(final Conta conta) {

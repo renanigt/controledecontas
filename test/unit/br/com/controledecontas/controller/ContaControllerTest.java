@@ -2,7 +2,6 @@ package br.com.controledecontas.controller;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -55,7 +54,6 @@ public class ContaControllerTest {
 	public void deveriaSalvarConta() {
 		Conta conta = criaConta();
 		
-		when(usuarioSession.isLogado()).thenReturn(true);
 		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
 		
 		contaController.salvar(conta);
@@ -66,25 +64,10 @@ public class ContaControllerTest {
 		assertFalse("Não deveria conter mensagem de erro.", result.included().containsKey("erros"));
 	}
 	
-	@Test
-	public void naoDeveriaSalvarContaSemUsuarioLogado() {
-		Conta conta = criaConta();
-		
-		when(usuarioSession.isLogado()).thenReturn(false);
-		
-		contaController.salvar(conta);
-		
-		verify(contaService, never()).salva(conta);
-		
-		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
-		assertFalse("Não deveria conter mensagem de sucesso.", result.included().containsKey("notice"));
-	}
-	
 	@Test(expected = ValidationException.class)
 	public void naoDeveriaSalvarContaVazia() {
 		Conta conta = criaContaVazia();
 		
-		when(usuarioSession.isLogado()).thenReturn(true);
 		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
 		
 		contaController.salvar(conta);
