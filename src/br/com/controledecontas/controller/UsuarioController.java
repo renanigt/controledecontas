@@ -8,9 +8,11 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.caelum.vraptor.view.Results;
+import br.com.controledecontas.annotation.Public;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.service.UsuarioService;
 
+@Public
 @Resource
 public class UsuarioController {
 

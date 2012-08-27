@@ -5,10 +5,12 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.controledecontas.annotation.Public;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.UsuarioService;
 
+@Public
 @Resource
 public class LoginController {
 
