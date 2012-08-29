@@ -1,6 +1,8 @@
 package br.com.controledecontas.controller;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.List;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -29,6 +31,14 @@ public class ContaController {
 		this.validator = validator;
 	}
 
+	@Get
+	@Path("/conta")
+	public void index() {
+		List<Conta> contas = contaService.pesquisaPorMes(usuarioSession.getUsuario(), Calendar.getInstance().get(Calendar.MONTH));
+		
+		result.include("contas", contas);
+	}
+	
 	@Get
 	@Path("/conta/novo")
 	public void novo() {

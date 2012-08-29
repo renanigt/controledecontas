@@ -2,11 +2,16 @@ package br.com.controledecontas.controller;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,9 +50,14 @@ public class ContaControllerTest {
 	}
 	
 	@Test
-	public void deveriaAbrirTelaDeSalvarConta() {
-		contaController.novo();
-		assertFalse("Não deveria retornar mensagem de erro.", result.included().containsKey("erros"));
+	public void deveriaAbrirTelaInicialComContasDoUltimoMes() {
+		List<Conta> listaDeContas = new ArrayList<Conta>();
+		
+		when(contaService.pesquisaPorMes(any(Usuario.class), anyInt())).thenReturn(listaDeContas);
+		
+		contaController.index();
+		
+		assertTrue("Deve haver uma lista de contas.", result.included().containsKey("contas"));
 	}
 	
 	@Test
@@ -73,6 +83,19 @@ public class ContaControllerTest {
 		contaController.salvar(conta);
 	}
 	
+	@Test
+	public void naoDeveriaSalvarContaException() {
+		Conta conta = criaConta();
+		
+		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
+		doThrow(new RuntimeException()).when(contaService).salva(conta);
+		
+		contaController.salvar(conta);
+		
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
+		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
+	}
+	
 	private Conta criaConta() {
 		Conta conta = new Conta();
 		
@@ -80,7 +103,6 @@ public class ContaControllerTest {
 		conta.setDescricao("Cartão de Crédito");
 		conta.setTipoConta(TipoConta.DEBITO);
 		conta.setValor(new BigDecimal("102.00"));
-		conta.setUsuario(criaUsuario());
 		
 		return conta;
 	}

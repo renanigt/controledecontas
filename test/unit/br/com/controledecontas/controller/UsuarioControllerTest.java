@@ -2,6 +2,7 @@ package br.com.controledecontas.controller;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
@@ -57,6 +58,18 @@ public class UsuarioControllerTest {
 		Usuario usuario = criaUsuarioVazio();
 		
 		usuarioController.salva(usuario);
+	}
+	
+	@Test
+	public void naoDeveriaSalvarUsuarioException() {
+		Usuario usuario = criaUsuario();
+		
+		doThrow(new RuntimeException()).when(usuarioService).salva(usuario);
+		
+		usuarioController.salva(usuario);
+		
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
+		assertFalse("Não deveria conter mesagem de sucesso.", result.included().containsKey("notice"));
 	}
 	
 	private Usuario criaUsuario() {
