@@ -3,6 +3,7 @@ package br.com.controledecontas.service.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -105,13 +106,20 @@ public class ContaServiceImplTest {
 
 	@Test
 	public void deveriaPesquisarContasPorTipo() {
-		List<Conta>  contas = contaService.pesquisaPorTipo(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), TipoConta.CREDITO);
+		List<Conta> contas = contaService.pesquisaPorTipo(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), TipoConta.CREDITO);
 		
 		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.AUGUST, 01);
 		
 		assertEquals("Quantidade de contas", 1, contas.size());
 		
 		verificaDadosConta(contas.get(0), dataConta.getTime(), "SALÁRIO", TipoConta.CREDITO, new BigDecimal("800.30"), ID_VALIDO_USUARIO);
+	}
+	
+	@Test
+	public void naoDeveriaPesquisarPorTipoParaUsuarioNulo() {
+		List<Conta> contas = contaService.pesquisaPorTipo(null, TipoConta.DEBITO);
+		
+		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
 	}
 	
 	@Test
@@ -122,6 +130,13 @@ public class ContaServiceImplTest {
 		
 		verificaDadosConta(contas.get(0), new GregorianCalendar(2012, Calendar.AUGUST, 1).getTime(), "SALÁRIO", TipoConta.CREDITO, new BigDecimal("800.30"), ID_VALIDO_USUARIO);
 		verificaDadosConta(contas.get(1), new GregorianCalendar(2012, Calendar.AUGUST, 2).getTime(), "CONTA CELULAR", TipoConta.DEBITO, new BigDecimal("60.30"), ID_VALIDO_USUARIO);
+	}
+	
+	@Test
+	public void naoDeveriaPesquisarContasPorMesParaUsuarioNulo() {
+		List<Conta> contas = contaService.pesquisaPorMes(null, Calendar.AUGUST);
+		
+		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
 	}
 	
 	private void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
