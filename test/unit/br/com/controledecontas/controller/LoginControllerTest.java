@@ -1,9 +1,9 @@
 package br.com.controledecontas.controller;
 
-import static org.mockito.Mockito.when;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
-import br.com.controledecontas.controller.LoginController;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.UsuarioService;
@@ -34,6 +33,7 @@ public class LoginControllerTest {
 		loginController = new LoginController(result, usuarioService, usuarioSession);
 	}
 	
+	@Test
 	public void deveriaAbrirTelaDeLogin() {
 		loginController.login();
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
@@ -48,9 +48,18 @@ public class LoginControllerTest {
 		
 		loginController.logar(username, password);
 		
-		assertNotNull("Não deveria ser nulo.", usuarioSession.getUsuario());
 		assertTrue("Deveria estar logado.", usuarioSession.isLogado());
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
+	}
+	
+	@Test
+	public void naoDeveriaEfetuarLoginParaUsuarioNaoCadastrado() {
+		when(usuarioService.autentica(anyString(), anyString())).thenReturn(null);
+		
+		loginController.logar("teste", "teste");
+		
+		assertFalse("Não deveria estar logado.", usuarioSession.isLogado());
+		assertTrue("Não deveria conter mensagem de erro", result.included().containsKey("erros"));
 	}
 	
 	private void seUsuarioEhCadastrado(String username, String password) {

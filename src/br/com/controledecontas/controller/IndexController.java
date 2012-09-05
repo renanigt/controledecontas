@@ -17,7 +17,7 @@ public class IndexController {
 	
 	@Path("/")
 	public void index() {
-		result.include("funcionando", "VRaptor está funcionando !");
+		result.include("notice", "VRaptor está funcionando !");
 	}
 	
 }

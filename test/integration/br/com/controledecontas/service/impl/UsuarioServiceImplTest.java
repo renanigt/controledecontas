@@ -70,6 +70,13 @@ public class UsuarioServiceImplTest {
 		assertEquals("Username", "RENANIGT", usuario.getUsername());
 		assertEquals("Password", "123", usuario.getPassword());
 	}
+	
+	@Test
+	public void deveriaRetornarNuloParaUsuarioNaoValido() {
+		Usuario usuario = usuarioService.autentica("renanigt", "senhaInvalida");
+		
+		assertNull("Usuário deve ser nullo.", usuario);
+	}
 
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
