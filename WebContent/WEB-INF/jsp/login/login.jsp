@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login</title>
+<title>Login - Controle de Contas</title>
 </head>
 <body>
 	<form action="<c:url value="/login/logar" />" name="form_usuario" method="post">
