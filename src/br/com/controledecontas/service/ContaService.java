@@ -20,4 +20,6 @@ public interface ContaService {
 
 	List<Conta> pesquisaPorMes(Usuario usuario, Integer mes);
 
+	List<Conta> pesquisaPorDescricao(Usuario usuario, String descricao);
+
 }

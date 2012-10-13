@@ -139,6 +139,22 @@ public class ContaServiceImplTest {
 		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
 	}
 	
+	@Test
+	public void deveriaPesquisarContaPorDescricao() {
+		List<Conta> contas = contaService.pesquisaPorDescricao(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), "CONTA");
+		
+		assertEquals("Quantidade de contas", 1, contas.size());
+		
+		verificaDadosConta(contas.get(0), new GregorianCalendar(2012, Calendar.AUGUST, 2).getTime(), "CONTA CELULAR", TipoConta.DEBITO, new BigDecimal("60.30"), ID_VALIDO_USUARIO);
+	}
+	
+	@Test
+	public void naoDeveriaPesquisarContaPorDescricaoParaUsuarioNulo() {
+		List<Conta> contas = contaService.pesquisaPorDescricao(null, "CONTA");
+		
+		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
+	}
+	
 	private void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
 		assertEquals("Data", dateFormat.format(data), dateFormat.format(conta.getData()));
 		assertEquals("Descrição", descricao, conta.getDescricao());

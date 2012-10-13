@@ -68,4 +68,19 @@ public class ContaServiceImpl implements ContaService {
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Conta> pesquisaPorDescricao(Usuario usuario, String descricao) {
+		if (usuario == null) {
+			return Collections.emptyList();
+		}
+		
+		String hql = "from Conta where descricao like :descricao";
+		
+		Query query = entityManager.createQuery(hql);
+		
+		query.setParameter("descricao", "%" + descricao + "%");
+		
+		return query.getResultList();
+	}
+
 }
