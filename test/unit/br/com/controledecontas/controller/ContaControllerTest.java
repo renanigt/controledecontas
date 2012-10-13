@@ -61,6 +61,13 @@ public class ContaControllerTest {
 	}
 	
 	@Test
+	public void deveriaAbrirTelaDeAdicionarComListaDeTipoDeConta() {
+		contaController.novo();
+		
+		assertTrue("Deve haver uma lista de tipos de Conta.", result.included().containsKey("tiposConta"));
+	}
+	
+	@Test
 	public void deveriaSalvarConta() {
 		Conta conta = criaConta();
 		

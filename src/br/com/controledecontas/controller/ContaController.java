@@ -1,6 +1,7 @@
 package br.com.controledecontas.controller;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,8 +12,8 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
-import br.com.caelum.vraptor.view.Results;
 import br.com.controledecontas.model.Conta;
+import br.com.controledecontas.model.TipoConta;
 import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.ContaService;
 
@@ -42,11 +43,11 @@ public class ContaController {
 	@Get
 	@Path("/conta/novo")
 	public void novo() {
-		
+		result.include("tiposConta", Arrays.asList(TipoConta.values()));
 	}
 
 	@Post
-	@Path("/conta/salvar")
+	@Path("/conta/novo/salvar")
 	public void salvar(Conta conta) {
 		conta.setUsuario(usuarioSession.getUsuario());
 		
@@ -64,13 +65,13 @@ public class ContaController {
 
 	private void validaCamposObrigatorios(final Conta conta) {
 		validator.checking(new Validations() {{
-			that(!conta.getDescricao().trim().isEmpty(), "Descrição", "Campo não pode ser vazio.");
-			that(conta.getValor().compareTo(new BigDecimal("0.00")) == 1, "Valor", "Campo não pode ser vazio");
-			that(conta.getData() != null, "Valor", "Campo não pode ser vazio");
-			that(conta.getTipoConta() != null, "Valor", "Campo não pode ser vazio");
+			that(conta.getDescricao() != null && !conta.getDescricao().trim().isEmpty(), "Descrição", "Campo não pode ser vazio.");
+			that(conta.getValor() != null && conta.getValor().compareTo(new BigDecimal("0.00")) != 0, "Valor", "Campo não pode ser vazio");
+			that(conta.getData() != null, "Data", "Campo não pode ser vazio");
+			that(conta.getTipoConta() != null, "Tipo Conta", "Campo não pode ser vazio");
 		}});
 		
-		validator.onErrorUse(Results.page()).of(this.getClass()).novo();
+		validator.onErrorRedirectTo(this.getClass()).novo();
 	}
 	
 }
