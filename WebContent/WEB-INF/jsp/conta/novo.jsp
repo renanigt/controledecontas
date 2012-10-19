@@ -19,9 +19,9 @@
 		<div>
 			<label>Tipo de Conta:</label>
 			<select name="conta.tipoConta" id="tipo" >
-					<option>Selecione...</option>
+				<option>Selecione...</option>
 				<c:forEach var="tipoConta" items="${tiposConta}">
-					<option value="${tipoConta.name}">${tipoConta.toString}</option>
+					<option value="${tipoConta.name}">${tipoConta.descricao}</option>
 				</c:forEach>
 			</select>
 		</div>

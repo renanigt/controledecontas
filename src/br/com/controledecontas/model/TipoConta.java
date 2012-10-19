@@ -2,26 +2,20 @@ package br.com.controledecontas.model;
 
 public enum TipoConta {
 
-	CREDITO {
-		@Override
-		public String toString() {
-			return "Crédito";
-		}
-	},
+	CREDITO("Crédito"), DEBITO("Débito");
 	
-	DEBITO {
-		@Override
-		public String toString() {
-			return "Débito";
-		}
-	};
-	
+	String descricao;
+
+	private TipoConta(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public String getName() {
 		return name();
 	}
 	
-	public String getToString() {
-		return toString();
+	public String getDescricao() {
+		return descricao;
 	}
-	
+
 }
