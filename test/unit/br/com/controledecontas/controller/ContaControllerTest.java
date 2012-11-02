@@ -1,6 +1,8 @@
 package br.com.controledecontas.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -13,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -78,8 +79,8 @@ public class ContaControllerTest {
 		
 		verify(contaService).salva(conta);
 
-		Assert.assertNotNull("Usuário não deve ser nulo", conta.getUsuario());
-		Assert.assertEquals(criaUsuario().getId(), conta.getUsuario().getId());
+		assertNotNull("Usuário não deve ser nulo", conta.getUsuario());
+		assertEquals(criaUsuario().getId(), conta.getUsuario().getId());
 		assertTrue("Deveria retornar mensagem de sucesso.", result.included().containsKey("notice"));
 		assertFalse("Não deveria conter mensagem de erro.", result.included().containsKey("erros"));
 	}
