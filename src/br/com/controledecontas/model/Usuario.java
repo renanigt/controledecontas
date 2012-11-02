@@ -1,6 +1,7 @@
 package br.com.controledecontas.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -34,7 +35,20 @@ public class Usuario implements Serializable {
 	
 	@OneToMany(mappedBy="usuario", fetch=FetchType.LAZY)
 	private List<Conta> contas;
+	
+	@Column(name="SALDO")
+	private BigDecimal saldo = new BigDecimal("0.00");
 
+	public Usuario(String nome, String username, String password, BigDecimal saldo) {
+		this.nome = nome;
+		this.username = username;
+		this.password = password;
+		this.saldo = saldo;
+	}
+	
+	public Usuario() {
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -74,4 +88,17 @@ public class Usuario implements Serializable {
 	public void setContas(List<Conta> contas) {
 		this.contas = contas;
 	}
+
+	public BigDecimal getSaldo() {
+		return saldo;
+	}
+
+	public void alteraSaldo(Conta conta) {
+		if (conta.getTipoConta() == TipoConta.CREDITO) {
+			this.saldo = this.saldo.add(conta.getValor());
+		} else {
+			this.saldo = this.saldo.subtract(conta.getValor());
+		}
+	}
+	
 }
