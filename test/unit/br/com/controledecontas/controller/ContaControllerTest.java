@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -76,7 +77,9 @@ public class ContaControllerTest {
 		contaController.salvar(conta);
 		
 		verify(contaService).salva(conta);
-		
+
+		Assert.assertNotNull("Usuário não deve ser nulo", conta.getUsuario());
+		Assert.assertEquals(criaUsuario().getId(), conta.getUsuario().getId());
 		assertTrue("Deveria retornar mensagem de sucesso.", result.included().containsKey("notice"));
 		assertFalse("Não deveria conter mensagem de erro.", result.included().containsKey("erros"));
 	}
@@ -127,6 +130,7 @@ public class ContaControllerTest {
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
+		usuario.setId(1);
 		usuario.setNome("Renan");
 		usuario.setUsername("renanigt");
 		usuario.setPassword("teste");
