@@ -62,6 +62,15 @@ public class LoginControllerTest {
 		assertTrue("Não deveria conter mensagem de erro", result.included().containsKey("erros"));
 	}
 	
+	@Test
+	public void deveriaEfetuarLogoutDoUsuario() {
+		usuarioSession.setUsuario(new Usuario());
+		
+		loginController.logout();
+		
+		assertFalse("Não deveria estar logado.", usuarioSession.isLogado());
+	}
+	
 	private void seUsuarioEhCadastrado(String username, String password) {
 		Usuario usuario = new Usuario();
 		

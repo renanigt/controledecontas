@@ -16,12 +16,12 @@ public class LoginController {
 
 	private Result result;
 	private UsuarioService usuarioService;
-	private UsuarioSession usuarioLoginController;
+	private UsuarioSession usuarioSession;
 	
 	public LoginController(Result result, UsuarioService usuarioService, UsuarioSession usuarioLoginController) {
 		this.result = result;
 		this.usuarioService = usuarioService;
-		this.usuarioLoginController = usuarioLoginController;
+		this.usuarioSession = usuarioLoginController;
 	}
 	
 	@Get
@@ -36,13 +36,21 @@ public class LoginController {
 		Usuario usuario = usuarioService.autentica(username, password);
 		
 		if(usuario != null) {
-			usuarioLoginController.setUsuario(usuario);
-			result.redirectTo(IndexController.class).index();
+			usuarioSession.setUsuario(usuario);
+			result.redirectTo(ContaController.class).index();
 		} else {
 			result.include("erros", "Usuário ou senha inválidos.");
 			result.redirectTo(this).login();
 		}
 		
+	}
+	
+	@Get
+	@Path("/login/logout")
+	public void logout() {
+		usuarioSession.logout();
+		
+		result.redirectTo(this).login();
 	}
 
 }
