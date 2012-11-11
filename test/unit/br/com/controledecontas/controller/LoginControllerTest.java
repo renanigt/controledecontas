@@ -36,17 +36,17 @@ public class LoginControllerTest {
 	@Test
 	public void deveriaAbrirTelaDeLogin() {
 		loginController.login();
+		
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
 	}
 	
 	@Test
 	public void daveriaEfetuarLoginNaAplicacao() {
-		String username = "montenegro";
-		String password = "123";
+		Usuario usuario = criaUsuario();
 		
-		seUsuarioEhCadastrado(username, password);
+		when(usuarioService.autentica(anyString(), anyString())).thenReturn(usuario);
 		
-		loginController.logar(username, password);
+		loginController.logar(usuario.getUsername(), usuario.getPassword());
 		
 		assertTrue("Deveria estar logado.", usuarioSession.isLogado());
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
@@ -64,20 +64,20 @@ public class LoginControllerTest {
 	
 	@Test
 	public void deveriaEfetuarLogoutDoUsuario() {
-		usuarioSession.setUsuario(new Usuario());
+		usuarioSession.setUsuario(criaUsuario());
 		
 		loginController.logout();
 		
 		assertFalse("Não deveria estar logado.", usuarioSession.isLogado());
 	}
 	
-	private void seUsuarioEhCadastrado(String username, String password) {
+	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
-		usuario.setUsername(username);
-		usuario.setPassword(password);
+		usuario.setUsername("renanigt");
+		usuario.setPassword("teste");
 		
-		when(usuarioService.autentica(username, password)).thenReturn(usuario);
+		return usuario;
 	}
 	
 }
