@@ -39,10 +39,13 @@
 				                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contas<b class="caret"></b></a>
 				                <ul class="dropdown-menu">
 					                <li><a href="<c:url value="/conta/novo" />">Adicionar</a></li>
-					                <li><a href="#">Listar</a></li>
+					                <li><a href="#myModal" data-toggle="modal">Listar</a></li>
 				                </ul>
 			                </li>
 						</ul>
+						<form class="navbar-search pull-left">
+						  <input type="text" class="search-query" placeholder="Pesquisar">
+						</form>
 						<ul class="nav pull-right">
 							<li class="dropdown">
 				                <a href="#" class="dropdown-toggle" data-toggle="dropdown">${usuarioSession.usuario.username}<b class="caret"></b></a>
@@ -59,7 +62,32 @@
 			</div>
 		</div>
 	</div>
-	
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+	    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    	<h3 id="myModalLabel">Pesquisar por Período</h3>
+  		</div>
+  		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label">Data Inicial:</label>
+					<div class="controls">
+						<input type="text" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Data Final:</label>
+					<div class="controls">
+						<input type="text" />
+					</div>
+				</div>
+				<div class="controls">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+					<input class="btn btn-primary" type="submit" value="Listar" />
+				</div>
+			</form>
+		</div>
+	</div>	
 	<decorator:body />
 	
 	<script src="<c:url value="/js/jquery-1.8.1.min.js"/>"></script>
