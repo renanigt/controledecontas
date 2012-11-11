@@ -6,12 +6,14 @@
 </head>
 <body>
 	<div class="container container-page">
-		<span>
-			<c:forEach var="error" items="${errors}"><li>${error.category} - ${error.message}</li></c:forEach>
-		</span>
-	
 		<fieldset>
-		<legend>Adicionar Conta</legend>
+			<legend>Adicionar Conta</legend>
+			<c:if test="${not empty errors}">
+				<div class="alert alert-error">
+					<c:forEach var="error" items="${errors}"><li>${error.category} - ${error.message}</li></c:forEach>
+				</div>
+			</c:if>
+	
 			<form class="form-horizontal" action="<c:url value="/conta/novo/salvar" />" name="form_conta" method="post">
 				<div class="control-group">
 					<label class="control-label">Descrição:</label>

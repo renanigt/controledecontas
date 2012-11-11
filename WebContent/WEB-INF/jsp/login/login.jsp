@@ -2,9 +2,16 @@
 
 <html>
 <head>
+	<style type="text/css">
+		.container-login {
+			width: 400px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
 </head>
 <body>
-<div style="width: 400px; margin-left: auto; margin-right: auto;">
+<div class="container-page container-login">
 	<fieldset>
 		<legend>Login</legend><br />
 		<form class="form-horizontal" action="<c:url value="/login/logar" />" name="form_usuario" method="post">
