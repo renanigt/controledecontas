@@ -35,7 +35,8 @@ public class ContaController {
 	@Get
 	@Path("/conta")
 	public void index() {
-		List<Conta> contas = contaService.pesquisaPorMes(usuarioSession.getUsuario(), Calendar.getInstance().get(Calendar.MONTH));
+		Calendar dataAtual = Calendar.getInstance();
+		List<Conta> contas = contaService.pesquisaPorMesEAno(usuarioSession.getUsuario(), dataAtual.get(Calendar.MONTH), dataAtual.get(Calendar.YEAR));
 		
 		result.include("contas", contas);
 	}

@@ -55,7 +55,7 @@ public class ContaControllerTest {
 	public void deveriaAbrirTelaInicialComContasDoUltimoMes() {
 		List<Conta> listaDeContas = new ArrayList<Conta>();
 		
-		when(contaService.pesquisaPorMes(any(Usuario.class), anyInt())).thenReturn(listaDeContas);
+		when(contaService.pesquisaPorMesEAno(any(Usuario.class), anyInt(), anyInt())).thenReturn(listaDeContas);
 		
 		contaController.index();
 		

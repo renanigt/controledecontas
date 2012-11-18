@@ -11,6 +11,17 @@
 		<span>
 			<c:forEach var="error" items="${errors}"><li>${error.category} - ${error.message}</li></c:forEach>
 		</span>
+		
+		<div style="text-align: center;">
+			<h3>Saldo: 
+				<span style="color: blue;">
+					${usuarioSession.usuario.saldo}
+				</span>
+				<c:if test="${usuarioSession.usuario.saldo < 0}">
+					<span style="color: red;">
+				</c:if>
+			</h3>
+		</div>
 	
 		<table class="table table-striped">
 			<thead>
@@ -23,11 +34,9 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${contas}" var="conta">
+					<tr style="color: blue;">
 					<c:if test="${conta.tipoConta == 'DEBITO'}">
 						<tr style="color: red;">
-					</c:if>
-					<c:if test="${conta.tipoConta == 'CREDITO'}">
-						<tr style="color: blue;">
 					</c:if>
 						<td>${conta.descricao}</td>
 						<td>${conta.tipoConta.descricao}</td>

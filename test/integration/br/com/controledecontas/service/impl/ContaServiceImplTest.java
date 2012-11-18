@@ -123,8 +123,8 @@ public class ContaServiceImplTest {
 	}
 	
 	@Test
-	public void deveriaPesquisarContasPorMes() {
-		List<Conta> contas = contaService.pesquisaPorMes(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), Calendar.AUGUST);
+	public void deveriaPesquisarContasPorMesEAno() {
+		List<Conta> contas = contaService.pesquisaPorMesEAno(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), Calendar.AUGUST, 2012);
 		
 		assertEquals("Quantidade de contas", 2, contas.size());
 		
@@ -134,7 +134,7 @@ public class ContaServiceImplTest {
 	
 	@Test
 	public void naoDeveriaPesquisarContasPorMesParaUsuarioNulo() {
-		List<Conta> contas = contaService.pesquisaPorMes(null, Calendar.AUGUST);
+		List<Conta> contas = contaService.pesquisaPorMesEAno(null, Calendar.AUGUST, 2012);
 		
 		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
 	}
