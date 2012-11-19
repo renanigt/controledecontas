@@ -67,12 +67,14 @@ public class ContaServiceImplTest {
 	@Test
 	public void deveriaSalvarConta() {
 		Conta conta = criaConta();
-		
+
+		conta.getUsuario().alteraSaldo(conta);
 		contaService.salva(conta);
 		
 		Conta contaSalva = contaService.pesquisaPorId(conta.getId());
 		
 		verificaDadosConta(contaSalva, new GregorianCalendar(2012, Calendar.JULY, 25).getTime(), "Supermercado", TipoConta.DEBITO, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
+		assertEquals("Saldo do Usuário", new BigDecimal("13.43").negate(), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
 	}
 	
 	@Test

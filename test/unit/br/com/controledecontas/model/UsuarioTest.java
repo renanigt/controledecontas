@@ -29,6 +29,15 @@ public class UsuarioTest {
 		
 		assertEquals("Saldo", new BigDecimal("9.50"), usuario.getSaldo());
 	}
+
+	@Test
+	public void deveriaVoltarAoSaldoAnterior() {
+		usuario.alteraSaldo(credito());
+		
+		usuario.voltaAoSaldoAnterior();
+		
+		assertEquals("Saldo", new BigDecimal("20.00"), usuario.getSaldo());
+	}
 	
 	public Conta debito() {
 		Conta conta = new Conta();

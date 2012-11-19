@@ -14,6 +14,7 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.controledecontas.model.Conta;
 import br.com.controledecontas.model.TipoConta;
+import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.ContaService;
 
@@ -50,14 +51,19 @@ public class ContaController {
 	@Post
 	@Path("/conta/novo/salvar")
 	public void salvar(Conta conta) {
-		conta.setUsuario(usuarioSession.getUsuario());
+		Usuario usuario = usuarioSession.getUsuario();
 		
 		validaCamposObrigatorios(conta);
+		
+		conta.setUsuario(usuario);
+		
+		usuario.alteraSaldo(conta);
 		
 		try {
 			contaService.salva(conta);
 			result.include("notice", "Conta salva com sucesso!");
 		} catch(Exception e) {
+			usuario.voltaAoSaldoAnterior();
 			result.include("erros", e.getMessage());
 		}
 		

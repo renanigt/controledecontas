@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="USUARIO")
@@ -38,6 +39,9 @@ public class Usuario implements Serializable {
 	
 	@Column(name="SALDO")
 	private BigDecimal saldo = new BigDecimal("0.00");
+	
+	@Transient
+	private BigDecimal saldoAnterior;
 
 	public Usuario(String nome, String username, String password, BigDecimal saldo) {
 		this.nome = nome;
@@ -94,11 +98,17 @@ public class Usuario implements Serializable {
 	}
 
 	public void alteraSaldo(Conta conta) {
+		this.saldoAnterior = this.saldo;
+		
 		if (conta.getTipoConta() == TipoConta.CREDITO) {
 			this.saldo = this.saldo.add(conta.getValor());
 		} else {
 			this.saldo = this.saldo.subtract(conta.getValor());
 		}
+	}
+
+	public void voltaAoSaldoAnterior() {
+		this.saldo = this.saldoAnterior;
 	}
 	
 }

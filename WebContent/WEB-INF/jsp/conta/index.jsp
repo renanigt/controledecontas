@@ -14,12 +14,14 @@
 		
 		<div style="text-align: center;">
 			<h3>Saldo: 
-				<span style="color: blue;">
-					${usuarioSession.usuario.saldo}
-				</span>
 				<c:if test="${usuarioSession.usuario.saldo < 0}">
 					<span style="color: red;">
 				</c:if>
+				<c:if test="${usuarioSession.usuario.saldo > 0}">
+					<span style="color: blue;">
+				</c:if>
+					${usuarioSession.usuario.saldo}
+				</span>
 			</h3>
 		</div>
 	
