@@ -55,9 +55,9 @@ public class ContaController {
 		
 		validaCamposObrigatorios(conta);
 		
-		conta.setUsuario(usuario);
-		
 		usuario.alteraSaldo(conta);
+		
+		conta.setUsuario(usuario);
 		
 		try {
 			contaService.salva(conta);
