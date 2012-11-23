@@ -51,11 +51,9 @@ public class ContaController {
 	@Post
 	@Path("/conta/novo/salvar")
 	public void salvar(Conta conta) {
-		Usuario usuario = usuarioSession.getUsuario();
-		
 		validaCamposObrigatorios(conta);
-		
-		usuario.alteraSaldo(conta);
+
+		Usuario usuario = usuarioSession.getUsuario();
 		
 		conta.setUsuario(usuario);
 		
@@ -78,7 +76,7 @@ public class ContaController {
 			that(conta.getTipoConta() != null, "Tipo Conta", "Campo não pode ser vazio");
 		}});
 		
-		validator.onErrorRedirectTo(this.getClass()).novo();
+		validator.onErrorForwardTo(this).novo();
 	}
 	
 }

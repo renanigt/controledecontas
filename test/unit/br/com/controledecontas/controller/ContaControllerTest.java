@@ -81,7 +81,6 @@ public class ContaControllerTest {
 
 		assertNotNull("Usuário não deve ser nulo", conta.getUsuario());
 		assertEquals(criaUsuario().getId(), conta.getUsuario().getId());
-		assertEquals(usuarioSession.getUsuario().getSaldo(), conta.getValor().negate());
 		assertTrue("Deveria retornar mensagem de sucesso.", result.included().containsKey("notice"));
 		assertFalse("Não deveria conter mensagem de erro.", result.included().containsKey("erros"));
 	}
@@ -104,7 +103,6 @@ public class ContaControllerTest {
 		
 		contaController.salvar(conta);
 		
-		assertEquals(usuarioSession.getUsuario().getSaldo(), criaUsuario().getSaldo());
 		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
 		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
 	}

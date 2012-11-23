@@ -7,7 +7,6 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
-import br.com.caelum.vraptor.view.Results;
 import br.com.controledecontas.annotation.Public;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.service.UsuarioService;
@@ -54,7 +53,7 @@ public class UsuarioController {
 			that(!usuario.getPassword().trim().isEmpty(), "Password", "O campo password não pode ser vazio.");
 		}});
 
-		validator.onErrorUse(Results.page()).of(this.getClass()).novo();
+		validator.onErrorForwardTo(this).novo();
 	}
 	
 }

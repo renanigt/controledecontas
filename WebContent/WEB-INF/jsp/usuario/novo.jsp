@@ -16,13 +16,15 @@
 			<div class="control-group">
 				<label class="control-label">Nome:</label>
 				<div class="controls">
-					<input type="text" name="usuario.nome" id="nome" size="60" maxlength="60" />
+					<input type="text" name="usuario.nome" id="nome" size="60" maxlength="60"
+						value="${usuario.nome}" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">Username:</label>
 				<div class="controls">
-					<input type="text" name="usuario.username" id="username" size="15" maxlength="15" />
+					<input type="text" name="usuario.username" id="username" size="15" maxlength="15"
+						value="${usuario.username}" />
 				</div>
 			</div>
 			<div class="control-group">

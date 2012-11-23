@@ -18,7 +18,8 @@
 				<div class="control-group">
 					<label class="control-label">Descrição:</label>
 					<div class="controls">
-						<input class="input-xlarge" type="text" name="conta.descricao" id="descricao" maxlength="100" />
+						<input class="input-xlarge" type="text" name="conta.descricao" id="descricao" 
+							maxlength="100" value="${conta.descricao}" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -35,13 +36,15 @@
 				<div class="control-group">
 					<label class="control-label">Valor:</label>
 					<div class="controls">
-						<input type="text" name="conta.valor" id="valor" size="15" maxlength="15" />
+						<input type="text" name="conta.valor" id="valor" size="15" maxlength="15"
+							value="${conta.valor}" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">Data:</label>
 					<div class="controls">
-						<input type="text" name="conta.data" id="data" size="10" maxlength="10" />
+						<input type="text" name="conta.data" id="data" size="10" maxlength="10"
+							value="${conta.data}" />
 					</div>
 				</div>
 				<div class="controls">
