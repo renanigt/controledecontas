@@ -22,7 +22,6 @@
 	
 			<form class="form-horizontal" action="<c:url value="/conta/atualiza/salvar" />" name="form_conta" method="post">
 				<input type="hidden" name="conta.id" value="${conta.id}" />
-				<input type="hidden" name="conta.usuario.id" value="${conta.usuario.id}" />
 				<div class="control-group">
 					<label class="control-label">Descrição:</label>
 					<div class="controls">

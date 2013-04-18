@@ -26,14 +26,18 @@ public class ContaServiceImpl implements ContaService {
 
 	public void salva(Conta conta) {
 		Usuario usuario = conta.getUsuario();
-		usuario.alteraSaldo(conta);
+		usuario.alteraSaldo(conta, false);
 		
 		entityManager.persist(conta);
 		entityManager.merge(usuario);
 	}
 
 	public void deleta(Conta conta) {
+		Usuario usuario = conta.getUsuario();
+		usuario.alteraSaldo(conta, true);
+		
 		entityManager.remove(conta);
+		entityManager.merge(usuario);
 	}
 
 	public void atualiza(Conta conta) {

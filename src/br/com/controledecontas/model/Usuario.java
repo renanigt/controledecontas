@@ -97,13 +97,21 @@ public class Usuario implements Serializable {
 		return saldo;
 	}
 
-	public void alteraSaldo(Conta conta) {
+	public void alteraSaldo(Conta conta, Boolean isDelecao) {
 		this.saldoAnterior = this.saldo;
 		
-		if (conta.getTipoConta() == TipoConta.CREDITO) {
-			this.saldo = this.saldo.add(conta.getValor());
+		if(!isDelecao) {
+			if (conta.getTipoConta() == TipoConta.CREDITO) {
+				this.saldo = this.saldo.add(conta.getValor());
+			} else {
+				this.saldo = this.saldo.subtract(conta.getValor());
+			}
 		} else {
-			this.saldo = this.saldo.subtract(conta.getValor());
+			if (conta.getTipoConta() == TipoConta.DEBITO) {
+				this.saldo = this.saldo.add(conta.getValor());
+			} else {
+				this.saldo = this.saldo.subtract(conta.getValor());
+			}
 		}
 	}
 

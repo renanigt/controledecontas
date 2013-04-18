@@ -17,26 +17,40 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void deveriaAumentarValorDoSaldo() {
-		usuario.alteraSaldo(credito());
+	public void deveriaAumentarValorDoSaldoQuandoContaCreditoNaoForUmaDelecao() {
+		usuario.alteraSaldo(credito(), false);
 		
 		assertEquals("Saldo", new BigDecimal("30.00"), usuario.getSaldo());
 	}
 	
 	@Test
-	public void deveriaDiminuirValorDoSaldo() {
-		usuario.alteraSaldo(debito());
+	public void deveriaDiminuirValorDoSaldoQuandoContaDebitoNaoForUmaDelecao() {
+		usuario.alteraSaldo(debito(), false);
 		
 		assertEquals("Saldo", new BigDecimal("9.50"), usuario.getSaldo());
 	}
 
 	@Test
-	public void deveriaVoltarAoSaldoAnterior() {
-		usuario.alteraSaldo(credito());
+	public void deveriaVoltarAoSaldoAnteriorQuandoContaCreditoNaoForUmaDelecao() {
+		usuario.alteraSaldo(credito(), false);
 		
 		usuario.voltaAoSaldoAnterior();
 		
 		assertEquals("Saldo", new BigDecimal("20.00"), usuario.getSaldo());
+	}
+
+	@Test
+	public void deveriaDiminuirValorDoSaldoQuandoContaCreditoForUmaDelecao() {
+		usuario.alteraSaldo(credito(), true);
+		
+		assertEquals("Saldo", new BigDecimal("10.00"), usuario.getSaldo());
+	}
+	
+	@Test
+	public void deveriaAumentarValorDoSaldoQuandoContaDebitoForUmaDelecao() {
+		usuario.alteraSaldo(debito(), true);
+		
+		assertEquals("Saldo", new BigDecimal("30.50"), usuario.getSaldo());
 	}
 	
 	public Conta debito() {

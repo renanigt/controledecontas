@@ -65,7 +65,7 @@ public class ContaServiceImplTest {
 	}
 	
 	@Test
-	public void deveriaSalvarConta() {
+	public void deveriaSalvarContaAlterarandoSaldoDoUsuario() {
 		Conta conta = criaConta();
 
 		contaService.salva(conta);
@@ -77,7 +77,7 @@ public class ContaServiceImplTest {
 	}
 	
 	@Test
-	public void deveriaRemoverConta() {
+	public void deveriaRemoverContaAlterarandoSaldoDoUsuario() {
 		Conta conta = contaService.pesquisaPorId(ID_VALIDO_CONTA);
 		
 		contaService.deleta(conta);
@@ -85,6 +85,7 @@ public class ContaServiceImplTest {
 		Conta contaRemovida = contaService.pesquisaPorId(ID_VALIDO_CONTA);
 		
 		assertNull("Conta deve ser nula", contaRemovida);
+		assertEquals("Saldo do Usuário", new BigDecimal("12.30"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
 	}
 	
 	@Test

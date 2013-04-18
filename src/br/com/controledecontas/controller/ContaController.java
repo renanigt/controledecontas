@@ -29,7 +29,7 @@ public class ContaController {
 	public ContaController(Result result, ContaService contaService, UsuarioSession usuarioSession, Validator validator) {
 		this.result = result;
 		this.service = contaService;
-		this.usuarioSession = usuarioSession;;
+		this.usuarioSession = usuarioSession;
 		this.validator = validator;
 	}
 
@@ -62,7 +62,8 @@ public class ContaController {
 	@Path("/conta/novo/salvar")
 	public void salvar(Conta conta) {
 		validaCamposObrigatorios(conta);
-
+		validator.onErrorForwardTo(this).novo();
+		
 		Usuario usuario = usuarioSession.getUsuario();
 		conta.setUsuario(usuario);
 		
@@ -81,6 +82,7 @@ public class ContaController {
 	@Path("/conta/atualiza/salvar")
 	public void atualizar(Conta conta) {
 		validaCamposObrigatorios(conta);
+		validator.onErrorForwardTo(this).edita(conta.getId());
 		
 		try {
 			service.atualiza(conta);
@@ -92,21 +94,13 @@ public class ContaController {
 		}
 	}
 	
-	private void validaCamposObrigatorios(final Conta conta) {
-		validator.checking(new Validations() {{
-			that(conta.getDescricao() != null && !conta.getDescricao().trim().isEmpty(), "Descrição", "Campo não pode ser vazio.");
-			that(conta.getValor() != null && conta.getValor().compareTo(new BigDecimal("0.00")) != 0, "Valor", "Campo não pode ser vazio");
-			that(conta.getData() != null, "Data", "Campo não pode ser vazio");
-			that(conta.getTipoConta() != null, "Tipo Conta", "Campo não pode ser vazio");
-		}});
-		
-		validator.onErrorForwardTo(this).novo();
-	}
-
 	@Get
 	@Path("/conta/deleta/{id}")
 	public void deletar(Integer id) {
 		Conta conta = service.pesquisaPorId(id);
+		
+		Usuario usuario = usuarioSession.getUsuario();
+		conta.setUsuario(usuario);
 		
 		try {
 			service.deleta(conta);
@@ -116,6 +110,15 @@ public class ContaController {
 		}
 		
 		result.redirectTo(this).index();
+	}
+	
+	private void validaCamposObrigatorios(final Conta conta) {
+		validator.checking(new Validations() {{
+			that(conta.getDescricao() != null && !conta.getDescricao().trim().isEmpty(), "Descrição", "Campo não pode ser vazio.");
+			that(conta.getValor() != null && conta.getValor().compareTo(new BigDecimal("0.00")) != 0, "Valor", "Campo não pode ser vazio");
+			that(conta.getData() != null, "Data", "Campo não pode ser vazio");
+			that(conta.getTipoConta() != null, "Tipo Conta", "Campo não pode ser vazio");
+		}});
 	}
 
 }
