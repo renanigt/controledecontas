@@ -22,13 +22,13 @@ import br.com.controledecontas.service.ContaService;
 public class ContaController {
 
 	private Result result;
-	private ContaService contaService;
+	private ContaService service;
 	private UsuarioSession usuarioSession;
 	private Validator validator;
 	
 	public ContaController(Result result, ContaService contaService, UsuarioSession usuarioSession, Validator validator) {
 		this.result = result;
-		this.contaService = contaService;
+		this.service = contaService;
 		this.usuarioSession = usuarioSession;;
 		this.validator = validator;
 	}
@@ -37,9 +37,17 @@ public class ContaController {
 	@Path("/conta")
 	public void index() {
 		Calendar dataAtual = Calendar.getInstance();
-		List<Conta> contas = contaService.pesquisaPorMesEAno(usuarioSession.getUsuario(), dataAtual.get(Calendar.MONTH), dataAtual.get(Calendar.YEAR));
+		List<Conta> contas = service.pesquisaPorMesEAno(usuarioSession.getUsuario(), dataAtual.get(Calendar.MONTH), dataAtual.get(Calendar.YEAR));
 		
 		result.include("contas", contas);
+	}
+
+	@Get
+	@Path("/conta/atualiza/{id}")
+	public void paginaDeAtualizacao(Integer id) {
+		Conta conta = service.pesquisaPorId(id);
+		
+		result.include("conta", conta);
 	}
 	
 	@Get
@@ -58,7 +66,7 @@ public class ContaController {
 		conta.setUsuario(usuario);
 		
 		try {
-			contaService.salva(conta);
+			service.salva(conta);
 			result.include("notice", "Conta salva com sucesso!");
 		} catch(Exception e) {
 			usuario.voltaAoSaldoAnterior();
@@ -68,6 +76,21 @@ public class ContaController {
 		result.redirectTo(IndexController.class).index();
 	}
 
+	@Post
+	@Path("/conta/atualiza/salvar")
+	public void atualizar(Conta conta) {
+		validaCamposObrigatorios(conta);
+		
+		try {
+			service.atualiza(conta);
+			result.include("notice", "Conta atualizada com sucesso!");
+		} catch(Exception e) {
+			result.include("erros", e.getMessage());
+		}
+
+		result.redirectTo(IndexController.class).index();
+	}
+	
 	private void validaCamposObrigatorios(final Conta conta) {
 		validator.checking(new Validations() {{
 			that(conta.getDescricao() != null && !conta.getDescricao().trim().isEmpty(), "Descrição", "Campo não pode ser vazio.");
@@ -78,5 +101,5 @@ public class ContaController {
 		
 		validator.onErrorForwardTo(this).novo();
 	}
-	
+
 }

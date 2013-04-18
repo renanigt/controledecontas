@@ -35,11 +35,11 @@ import br.com.controledecontas.service.ContaService;
 public class ContaControllerTest {
 
 	private Result result;
-	private ContaController contaController;
+	private ContaController controller;
 	private Validator validator;
 
 	@Mock
-	private ContaService contaService;
+	private ContaService service;
 	@Mock
 	private UsuarioSession usuarioSession;
 	
@@ -48,36 +48,47 @@ public class ContaControllerTest {
 		MockitoAnnotations.initMocks(this);
 		result = new MockResult();
 		validator = new MockValidator();
-		contaController = new ContaController(result, contaService, usuarioSession, validator);
+		controller = new ContaController(result, service, usuarioSession, validator);
 	}
 	
 	@Test
 	public void deveriaAbrirTelaInicialComContasDoUltimoMes() {
 		List<Conta> listaDeContas = new ArrayList<Conta>();
 		
-		when(contaService.pesquisaPorMesEAno(any(Usuario.class), anyInt(), anyInt())).thenReturn(listaDeContas);
+		when(service.pesquisaPorMesEAno(any(Usuario.class), anyInt(), anyInt())).thenReturn(listaDeContas);
 		
-		contaController.index();
+		controller.index();
 		
 		assertTrue("Deve haver uma lista de contas.", result.included().containsKey("contas"));
 	}
 	
 	@Test
-	public void deveriaAbrirTelaDeAdicionarComListaDeTipoDeConta() {
-		contaController.novo();
+	public void deveriaAbrirPaginaDeAdicionarComListaDeTipoDeConta() {
+		controller.novo();
 		
 		assertTrue("Deve haver uma lista de tipos de Conta.", result.included().containsKey("tiposConta"));
 	}
 	
 	@Test
+	public void deveriaAbrirPaginaDeAtualizacao() {
+		Conta conta = conta();
+		
+		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
+		
+		controller.paginaDeAtualizacao(conta.getId());
+		
+		assertTrue("Deve haver uma conta", result.included().containsKey("conta"));
+	}
+	
+	@Test
 	public void deveriaSalvarConta() {
-		Conta conta = criaConta();
+		Conta conta = conta();
 		
 		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
 		
-		contaController.salvar(conta);
+		controller.salvar(conta);
 		
-		verify(contaService).salva(conta);
+		verify(service).salva(conta);
 
 		assertNotNull("Usuário não deve ser nulo", conta.getUsuario());
 		assertEquals(criaUsuario().getId(), conta.getUsuario().getId());
@@ -87,29 +98,61 @@ public class ContaControllerTest {
 	
 	@Test(expected = ValidationException.class)
 	public void naoDeveriaSalvarContaVazia() {
-		Conta conta = criaContaVazia();
+		Conta conta = contaVazia();
 		
 		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
 		
-		contaController.salvar(conta);
+		controller.salvar(conta);
 	}
 	
 	@Test
 	public void naoDeveriaSalvarContaException() {
-		Conta conta = criaConta();
+		Conta conta = conta();
 		
 		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
-		doThrow(new RuntimeException()).when(contaService).salva(conta);
+		doThrow(new RuntimeException()).when(service).salva(conta);
 		
-		contaController.salvar(conta);
+		controller.salvar(conta);
+		
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
+		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
+	}
+
+	@Test
+	public void deveriaAtualizarUmaConta() {
+		Conta conta = conta();
+
+		controller.atualizar(conta);
+		
+		verify(service).atualiza(conta);
+		
+		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
+		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erros"));
+	}
+	
+	@Test(expected = ValidationException.class)
+	public void naoDeveriaAtualizarUmaContaVazia() {
+		Conta conta = contaVazia();
+		
+		controller.atualizar(conta);
+	}
+	
+	@Test
+	public void naoDeveriaAtualizarUmaContaException() {
+		Conta conta = conta();
+		
+		doThrow(new RuntimeException()).when(service).atualiza(conta);
+		
+		controller.atualizar(conta);
 		
 		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
 		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
 	}
 	
-	private Conta criaConta() {
+	private Conta conta() {
 		Conta conta = new Conta();
 		
+		conta.setId(-1);
 		conta.setData(Calendar.getInstance().getTime());
 		conta.setDescricao("Cartão de Crédito");
 		conta.setTipoConta(TipoConta.DEBITO);
@@ -118,7 +161,7 @@ public class ContaControllerTest {
 		return conta;
 	}
 	
-	private Conta criaContaVazia() {
+	private Conta contaVazia() {
 		Conta conta = new Conta();
 		
 		conta.setDescricao("");

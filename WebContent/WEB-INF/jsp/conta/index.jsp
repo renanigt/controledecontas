@@ -13,13 +13,18 @@
 		</span>
 		
 		<div style="text-align: center;">
-			<h3>Saldo: 
-				<c:if test="${usuarioSession.usuario.saldo < 0}">
-					<span style="color: red;">
-				</c:if>
-				<c:if test="${usuarioSession.usuario.saldo > 0}">
-					<span style="color: blue;">
-				</c:if>
+			<h3>Saldo:
+				<c:choose>
+					<c:when test="${usuarioSession.usuario.saldo < 0}">
+						<span style="color: red;">
+					</c:when>
+					<c:when test="${usuarioSession.usuario.saldo > 0}">
+						<span style="color: blue;">
+					</c:when>
+					<c:otherwise>
+						<span>
+					</c:otherwise>
+				</c:choose> 
 					${usuarioSession.usuario.saldo}
 				</span>
 			</h3>
@@ -32,18 +37,27 @@
 					<th>Tipo de Conta</th>
 					<th>Data</th>
 					<th>Valor</th>
+					<th>Ações</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${contas}" var="conta">
-					<tr style="color: blue;">
-					<c:if test="${conta.tipoConta == 'DEBITO'}">
-						<tr style="color: red;">
-					</c:if>
+					<c:choose>
+						<c:when test="${conta.tipoConta == 'CREDITO'}">
+							<tr style="color: blue;">
+						</c:when>
+						<c:otherwise>
+							<tr style="color: red;">
+						</c:otherwise>
+					</c:choose>
 						<td>${conta.descricao}</td>
 						<td>${conta.tipoConta.descricao}</td>
 						<td>${conta.data}</td>
-						<td>${conta.valor}</td>
+						<td>R$ ${conta.valor}</td>
+						<td>
+							<img title="Editar" src="images/editar.png">
+							<img title="Deletar" src="images/delete.png">
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
