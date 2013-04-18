@@ -42,17 +42,19 @@ public class ContaController {
 		result.include("contas", contas);
 	}
 
-	@Get
-	@Path("/conta/atualiza/{id}")
-	public void paginaDeAtualizacao(Integer id) {
-		Conta conta = service.pesquisaPorId(id);
-		
-		result.include("conta", conta);
-	}
 	
 	@Get
 	@Path("/conta/novo")
 	public void novo() {
+		result.include("tiposConta", Arrays.asList(TipoConta.values()));
+	}
+	
+	@Get
+	@Path("/conta/atualiza/{id}")
+	public void edita(Integer id) {
+		Conta conta = service.pesquisaPorId(id);
+		
+		result.include("conta", conta);
 		result.include("tiposConta", Arrays.asList(TipoConta.values()));
 	}
 
@@ -62,7 +64,6 @@ public class ContaController {
 		validaCamposObrigatorios(conta);
 
 		Usuario usuario = usuarioSession.getUsuario();
-		
 		conta.setUsuario(usuario);
 		
 		try {
@@ -70,7 +71,7 @@ public class ContaController {
 			result.include("notice", "Conta salva com sucesso!");
 		} catch(Exception e) {
 			usuario.voltaAoSaldoAnterior();
-			result.include("erros", e.getMessage());
+			result.include("erro", e.getMessage());
 		}
 		
 		result.redirectTo(IndexController.class).index();
@@ -84,11 +85,11 @@ public class ContaController {
 		try {
 			service.atualiza(conta);
 			result.include("notice", "Conta atualizada com sucesso!");
+			result.redirectTo(IndexController.class).index();
 		} catch(Exception e) {
-			result.include("erros", e.getMessage());
+			result.include("erro", e.getMessage());
+			result.forwardTo(this).edita(conta.getId());
 		}
-
-		result.redirectTo(IndexController.class).index();
 	}
 	
 	private void validaCamposObrigatorios(final Conta conta) {
@@ -100,6 +101,21 @@ public class ContaController {
 		}});
 		
 		validator.onErrorForwardTo(this).novo();
+	}
+
+	@Get
+	@Path("/conta/deleta/{id}")
+	public void deletar(Integer id) {
+		Conta conta = service.pesquisaPorId(id);
+		
+		try {
+			service.deleta(conta);
+			result.include("notice", "Conta removida com sucesso!");
+		} catch(Exception e) {
+			result.include("erro", e.getMessage());
+		}
+		
+		result.redirectTo(this).index();
 	}
 
 }

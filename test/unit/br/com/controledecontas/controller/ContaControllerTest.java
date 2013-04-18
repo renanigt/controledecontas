@@ -75,9 +75,10 @@ public class ContaControllerTest {
 		
 		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
 		
-		controller.paginaDeAtualizacao(conta.getId());
+		controller.edita(conta.getId());
 		
 		assertTrue("Deve haver uma conta", result.included().containsKey("conta"));
+		assertTrue("Deve conter uma lista de tipo de conta", result.included().containsKey("tiposConta"));
 	}
 	
 	@Test
@@ -114,7 +115,7 @@ public class ContaControllerTest {
 		
 		controller.salvar(conta);
 		
-		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erro"));
 		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
 	}
 
@@ -127,7 +128,7 @@ public class ContaControllerTest {
 		verify(service).atualiza(conta);
 		
 		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
-		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erros"));
+		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
 	
 	@Test(expected = ValidationException.class)
@@ -145,7 +146,36 @@ public class ContaControllerTest {
 		
 		controller.atualizar(conta);
 		
-		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erro"));
+		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
+	}
+	
+	@Test
+	public void deveriaDeletarUmaConta() {
+		Conta conta = conta();
+		
+		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
+		
+		controller.deletar(conta.getId());
+		
+		verify(service).deleta(conta);
+		
+		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
+		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
+	}
+	
+	@Test
+	public void naoDeveriaDeletarUmaContaException() {
+		Conta conta = conta();
+		
+		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
+		doThrow(new RuntimeException()).when(service).deleta(conta);
+		
+		controller.deletar(conta.getId());
+		
+		verify(service).deleta(conta);
+		
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erro"));
 		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
 	}
 	
