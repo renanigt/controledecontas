@@ -1,5 +1,6 @@
 *.class
 WebContent/WEB-INF/classes/
 .metadata
+.externalToolBuilders/
 target/
 build
