@@ -55,8 +55,8 @@
 						<td>${conta.data}</td>
 						<td>R$ ${conta.valor}</td>
 						<td>
-							<a href="/controledecontas/conta/atualiza/${conta.id}"><img title="Editar" src="images/editar.png" /></a>
-							<a href="/controledecontas/conta/deleta/${conta.id}"><img title="Deletar" src="images/delete.png" /></a>
+							<a href="<c:url value='/conta/atualiza/${conta.id}' />"><img title="Editar" src="images/editar.png" /></a>
+							<a href="<c:url value='/conta/deleta/${conta.id}' />"><img title="Deletar" src="images/delete.png" /></a>
 						</td>
 					</tr>
 				</c:forEach>
