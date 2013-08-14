@@ -125,7 +125,7 @@ public class ContaControllerTest {
 
 		controller.atualizar(conta);
 		
-		verify(service).atualiza(conta);
+		verify(service).atualiza(any(Conta.class), any(Conta.class));
 		
 		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
@@ -142,7 +142,7 @@ public class ContaControllerTest {
 	public void naoDeveriaAtualizarUmaContaException() {
 		Conta conta = conta();
 		
-		doThrow(new RuntimeException()).when(service).atualiza(conta);
+		doThrow(new RuntimeException()).when(service).atualiza(any(Conta.class), any(Conta.class));
 		
 		controller.atualizar(conta);
 		
@@ -190,7 +190,7 @@ public class ContaControllerTest {
 		
 		return conta;
 	}
-	
+
 	private Conta contaVazia() {
 		Conta conta = new Conta();
 		

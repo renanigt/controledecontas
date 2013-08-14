@@ -73,7 +73,7 @@ public class ContaServiceImplTest {
 		Conta contaSalva = contaService.pesquisaPorId(conta.getId());
 		
 		verificaDadosConta(contaSalva, new GregorianCalendar(2012, Calendar.JULY, 25).getTime(), "Supermercado", TipoConta.DEBITO, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
-		assertEquals("Saldo do Usuário", new BigDecimal("-13.43"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
+		assertEquals("Saldo do Usuário", new BigDecimal("714.27"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
 	}
 	
 	@Test
@@ -85,12 +85,13 @@ public class ContaServiceImplTest {
 		Conta contaRemovida = contaService.pesquisaPorId(ID_VALIDO_CONTA);
 		
 		assertNull("Conta deve ser nula", contaRemovida);
-		assertEquals("Saldo do Usuário", new BigDecimal("12.30"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
+		assertEquals("Saldo do Usuário", new BigDecimal("740.00"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
 	}
 	
 	@Test
-	public void deveriaAtualizarConta() {
+	public void deveriaAtualizarContaAlterandoSaldoDoUsuario() {
 		Conta conta = contaService.pesquisaPorId(ID_VALIDO_CONTA);
+		Conta contaAnterior = contaEmprestimo();
 		
 		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 28);
 		
@@ -99,11 +100,21 @@ public class ContaServiceImplTest {
 		conta.setData(dataConta.getTime());
 		conta.setValor(new BigDecimal("30.00"));
 		
-		contaService.atualiza(conta);
+		contaService.atualiza(conta, contaAnterior);
 		
 		Conta contaAtualizada = contaService.pesquisaPorId(ID_VALIDO_CONTA);
 		
 		verificaDadosConta(contaAtualizada, dataConta.getTime(), "Recebido pagamento.", TipoConta.CREDITO, new BigDecimal("30.00"), ID_VALIDO_USUARIO);
+		assertEquals("Saldo do Usuário", new BigDecimal("770.00"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
+	}
+
+	private Conta contaEmprestimo() {
+		Conta conta = new Conta();
+		conta.setDescricao("EMPRESTIMO");
+		conta.setTipoConta(TipoConta.DEBITO);
+		conta.setValor(new BigDecimal("12.30"));
+		
+		return conta;
 	}
 
 	@Test

@@ -85,7 +85,9 @@ public class ContaController {
 		validator.onErrorForwardTo(this).edita(conta.getId());
 		
 		try {
-			service.atualiza(conta);
+			Conta contaAnterior = service.pesquisaPorId(conta.getId());
+			
+			service.atualiza(conta, contaAnterior);
 			result.include("notice", "Conta atualizada com sucesso!");
 			result.redirectTo(IndexController.class).index();
 		} catch(Exception e) {

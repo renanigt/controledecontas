@@ -14,7 +14,7 @@ public interface ContaService {
 
 	void deleta(Conta conta);
 
-	void atualiza(Conta conta);
+	void atualiza(Conta conta, Conta contaAnterior);
 
 	List<Conta> pesquisaPorTipo(Usuario usuario, TipoConta tipoConta);
 

@@ -40,7 +40,12 @@ public class ContaServiceImpl implements ContaService {
 		entityManager.merge(usuario);
 	}
 
-	public void atualiza(Conta conta) {
+	public void atualiza(Conta conta, Conta contaAnterior) {
+		Usuario usuario = conta.getUsuario();
+		
+		usuario.alteraSaldo(contaAnterior, true);
+		usuario.alteraSaldo(conta, false);
+		
 		entityManager.merge(conta);
 	}
 
