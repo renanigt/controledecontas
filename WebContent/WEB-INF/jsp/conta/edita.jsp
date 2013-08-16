@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -58,7 +59,7 @@
 					<label class="control-label">Data:</label>
 					<div class="controls">
 						<input type="text" name="conta.data" id="data" size="10" maxlength="10"
-							value="${conta.data}" />
+							value="<fmt:formatDate value='${conta.data}' type='date' pattern='dd/MM/yyyy'/>" />
 					</div>
 				</div>
 				<div class="controls">

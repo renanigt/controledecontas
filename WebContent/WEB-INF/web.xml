@@ -55,6 +55,11 @@
 		<filter-class>br.com.caelum.vraptor.VRaptor</filter-class>
 	</filter>
 	
+	<context-param>  
+  		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>  
+  		<param-value>pt_BR</param-value>  
+	</context-param>
+	
 	<filter-mapping>
 		<filter-name>vraptor</filter-name>
 		<url-pattern>/*</url-pattern>

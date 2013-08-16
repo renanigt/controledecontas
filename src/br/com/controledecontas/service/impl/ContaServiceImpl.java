@@ -47,6 +47,7 @@ public class ContaServiceImpl implements ContaService {
 		usuario.alteraSaldo(conta, false);
 		
 		entityManager.merge(conta);
+		entityManager.merge(usuario);
 	}
 
 	@SuppressWarnings("unchecked")

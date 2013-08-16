@@ -84,6 +84,9 @@ public class ContaController {
 		validaCamposObrigatorios(conta);
 		validator.onErrorForwardTo(this).edita(conta.getId());
 		
+		Usuario usuario = usuarioSession.getUsuario();
+		conta.setUsuario(usuario);
+		
 		try {
 			Conta contaAnterior = service.pesquisaPorId(conta.getId());
 			
