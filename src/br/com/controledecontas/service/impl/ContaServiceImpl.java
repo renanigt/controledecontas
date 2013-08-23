@@ -1,6 +1,7 @@
 package br.com.controledecontas.service.impl;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -94,6 +95,23 @@ public class ContaServiceImpl implements ContaService {
 		Query query = entityManager.createQuery(hql);
 		
 		query.setParameter("descricao", "%" + descricao + "%");
+		
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Conta> pesquisarPorPeriodo(Usuario usuario, Date dataInicio, Date dataFim) {
+		if (usuario == null) {
+			return Collections.emptyList();
+		}
+		
+		String hql = "from Conta where usuario_id = :userId and data between DATE(:dataInicio) and DATE(:dataFim) order by data";
+		
+		Query query = entityManager.createQuery(hql);
+		
+		query.setParameter("userId", usuario.getId());
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
 		
 		return query.getResultList();
 	}

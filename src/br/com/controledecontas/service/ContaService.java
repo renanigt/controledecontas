@@ -1,5 +1,6 @@
 package br.com.controledecontas.service;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.controledecontas.model.Conta;
@@ -21,5 +22,7 @@ public interface ContaService {
 	List<Conta> pesquisaPorMesEAno(Usuario usuario, Integer mes, Integer ano);
 
 	List<Conta> pesquisaPorDescricao(Usuario usuario, String descricao);
+
+	List<Conta> pesquisarPorPeriodo(Usuario usuario, Date dataInicio, Date dataFim);
 
 }

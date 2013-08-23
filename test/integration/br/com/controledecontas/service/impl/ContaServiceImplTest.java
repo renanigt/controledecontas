@@ -168,6 +168,30 @@ public class ContaServiceImplTest {
 		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
 	}
 	
+	@Test
+	public void deveriaPesquisarContasPorPeriodo() {
+		Date dataInicio = new GregorianCalendar(2012, Calendar.JULY, 1).getTime();
+		Date dataFim = new GregorianCalendar(2012, Calendar.AUGUST, 1).getTime();
+		
+		List<Conta> contas = contaService.pesquisarPorPeriodo(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), dataInicio, dataFim);
+		
+		assertEquals(2, contas.size());
+		verificaDadosConta(contas.get(0), new GregorianCalendar(2012, Calendar.JULY, 25).getTime(), 
+				"EMPRESTIMO", TipoConta.DEBITO, new BigDecimal("12.30"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contas.get(1), new GregorianCalendar(2012, Calendar.AUGUST, 1).getTime(), 
+				"SALÁRIO", TipoConta.CREDITO, new BigDecimal("800.30"), ID_VALIDO_USUARIO);
+	}
+
+	@Test
+	public void naoDeveriaPesquisarContasPorPeriodoParaUsuarioNulo() {
+		Date dataInicio = new GregorianCalendar(2012, Calendar.JULY, 1).getTime();
+		Date dataFim = new GregorianCalendar(2012, Calendar.AUGUST, 1).getTime();
+		
+		List<Conta> contas = contaService.pesquisarPorPeriodo(null, dataInicio, dataFim);
+		
+		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
+	}
+	
 	private void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
 		assertEquals("Data", dateFormat.format(data), dateFormat.format(conta.getData()));
 		assertEquals("Descrição", descricao, conta.getDescricao());
