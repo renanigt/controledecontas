@@ -72,7 +72,8 @@ public class ContaServiceImplTest {
 		
 		Conta contaSalva = contaService.pesquisaPorId(conta.getId());
 		
-		verificaDadosConta(contaSalva, new GregorianCalendar(2012, Calendar.JULY, 25).getTime(), "Supermercado", TipoConta.DEBITO, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contaSalva, new GregorianCalendar(2012, Calendar.JULY, 25).getTime(), 
+				"Supermercado", TipoConta.DEBITO, new BigDecimal("13.43"), ID_VALIDO_USUARIO);
 		assertEquals("Saldo do Usuário", new BigDecimal("714.27"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
 	}
 	
@@ -104,7 +105,8 @@ public class ContaServiceImplTest {
 		
 		Conta contaAtualizada = contaService.pesquisaPorId(ID_VALIDO_CONTA);
 		
-		verificaDadosConta(contaAtualizada, dataConta.getTime(), "Recebido pagamento.", TipoConta.CREDITO, new BigDecimal("30.00"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contaAtualizada, dataConta.getTime(), "Recebido pagamento.", 
+				TipoConta.CREDITO, new BigDecimal("30.00"), ID_VALIDO_USUARIO);
 		assertEquals("Saldo do Usuário", new BigDecimal("770.00"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
 	}
 
@@ -116,7 +118,8 @@ public class ContaServiceImplTest {
 		
 		assertEquals("Quantidade de contas", 1, contas.size());
 		
-		verificaDadosConta(contas.get(0), dataConta.getTime(), "SALÁRIO", TipoConta.CREDITO, new BigDecimal("800.30"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contas.get(0), dataConta.getTime(), "SALÁRIO", TipoConta.CREDITO, 
+				new BigDecimal("800.30"), ID_VALIDO_USUARIO);
 	}
 	
 	@Test
@@ -132,8 +135,10 @@ public class ContaServiceImplTest {
 		
 		assertEquals("Quantidade de contas", 2, contas.size());
 		
-		verificaDadosConta(contas.get(0), new GregorianCalendar(2012, Calendar.AUGUST, 1).getTime(), "SALÁRIO", TipoConta.CREDITO, new BigDecimal("800.30"), ID_VALIDO_USUARIO);
-		verificaDadosConta(contas.get(1), new GregorianCalendar(2012, Calendar.AUGUST, 2).getTime(), "CONTA CELULAR", TipoConta.DEBITO, new BigDecimal("60.30"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contas.get(0), new GregorianCalendar(2012, Calendar.AUGUST, 1).getTime(), 
+				"SALÁRIO", TipoConta.CREDITO, new BigDecimal("800.30"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contas.get(1), new GregorianCalendar(2012, Calendar.AUGUST, 2).getTime(), 
+				"CONTA CELULAR", TipoConta.DEBITO, new BigDecimal("60.30"), ID_VALIDO_USUARIO);
 	}
 	
 	@Test
@@ -149,7 +154,8 @@ public class ContaServiceImplTest {
 		
 		assertEquals("Quantidade de contas", 1, contas.size());
 		
-		verificaDadosConta(contas.get(0), new GregorianCalendar(2012, Calendar.AUGUST, 2).getTime(), "CONTA CELULAR", TipoConta.DEBITO, new BigDecimal("60.30"), ID_VALIDO_USUARIO);
+		verificaDadosConta(contas.get(0), new GregorianCalendar(2012, Calendar.AUGUST, 2).getTime(), 
+				"CONTA CELULAR", TipoConta.DEBITO, new BigDecimal("60.30"), ID_VALIDO_USUARIO);
 	}
 	
 	@Test
@@ -192,7 +198,8 @@ public class ContaServiceImplTest {
 		return conta;
 	}
 	
-	private void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
+	private void verificaDadosConta(Conta conta, Date data, String descricao, 
+			TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
 		assertEquals("Data", dateFormat.format(data), dateFormat.format(conta.getData()));
 		assertEquals("Descrição", descricao, conta.getDescricao());
 		assertEquals("Tipo de Conta", tipoDeConta, conta.getTipoConta());
