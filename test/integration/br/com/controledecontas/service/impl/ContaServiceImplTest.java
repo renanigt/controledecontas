@@ -108,15 +108,6 @@ public class ContaServiceImplTest {
 		assertEquals("Saldo do Usuário", new BigDecimal("770.00"), usuarioService.pesquisaPorId(ID_VALIDO_USUARIO).getSaldo());
 	}
 
-	private Conta contaEmprestimo() {
-		Conta conta = new Conta();
-		conta.setDescricao("EMPRESTIMO");
-		conta.setTipoConta(TipoConta.DEBITO);
-		conta.setValor(new BigDecimal("12.30"));
-		
-		return conta;
-	}
-
 	@Test
 	public void deveriaPesquisarContasPorTipo() {
 		List<Conta> contas = contaService.pesquisaPorTipo(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO), TipoConta.CREDITO);
@@ -190,6 +181,15 @@ public class ContaServiceImplTest {
 		List<Conta> contas = contaService.pesquisarPorPeriodo(null, dataInicio, dataFim);
 		
 		assertTrue("Deveria retornar uma lista vazia.", contas.isEmpty());
+	}
+	
+	private Conta contaEmprestimo() {
+		Conta conta = new Conta();
+		conta.setDescricao("EMPRESTIMO");
+		conta.setTipoConta(TipoConta.DEBITO);
+		conta.setValor(new BigDecimal("12.30"));
+		
+		return conta;
 	}
 	
 	private void verificaDadosConta(Conta conta, Date data, String descricao, TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
