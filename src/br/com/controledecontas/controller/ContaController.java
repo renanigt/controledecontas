@@ -3,6 +3,7 @@ package br.com.controledecontas.controller;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.caelum.vraptor.Get;
@@ -36,10 +37,17 @@ public class ContaController {
 	@Get
 	@Path("/conta")
 	public void index() {
-		Calendar dataAtual = Calendar.getInstance();
-		List<Conta> contas = service.pesquisaPorMesEAno(usuarioSession.getUsuario(), dataAtual.get(Calendar.MONTH), dataAtual.get(Calendar.YEAR));
+		Integer mes = Calendar.getInstance().get(Calendar.MONTH);
+		Integer ano = Calendar.getInstance().get(Calendar.YEAR);
+		
+		List<Conta> contas = service.pesquisaPorMesEAno(usuarioSession.getUsuario(), mes, ano);
 		
 		result.include("contas", contas);
+	}
+
+	@Get
+	@Path("/conta/lista")
+	public void lista() {
 	}
 
 	
@@ -114,6 +122,14 @@ public class ContaController {
 		}
 		
 		result.redirectTo(this).index();
+	}
+	
+	@Get
+	@Path("/conta/pesquisaPorPeriodo")
+	public void pesquisaPorPeriodo(Date dataInicio, Date dataFim) {
+		List<Conta> contas = service.pesquisarPorPeriodo(usuarioSession.getUsuario(), dataInicio, dataFim);
+		
+		result.include("contas", contas);
 	}
 	
 	private void validaCamposObrigatorios(final Conta conta) {

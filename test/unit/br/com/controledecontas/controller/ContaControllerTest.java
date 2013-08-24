@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -30,6 +31,8 @@ import br.com.controledecontas.model.TipoConta;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.ContaService;
+
+import com.google.common.collect.Lists;
 
 
 public class ContaControllerTest {
@@ -181,6 +184,19 @@ public class ContaControllerTest {
 		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
 	}
 	
+	@Test
+	public void deveriaPesquisarContaPorPeriodo() {
+		List<Conta> contas = Lists.newArrayList(conta());
+		
+		when(service.pesquisarPorPeriodo(any(Usuario.class), any(Date.class), any(Date.class))).thenReturn(contas);
+		
+		controller.pesquisaPorPeriodo(new Date(), new Date());
+		
+		verify(usuarioSession).getUsuario();
+		
+		assertTrue("Deve conter uma lista de contas.", result.included().containsKey("contas"));
+	}
+
 	private Conta conta() {
 		Conta conta = new Conta();
 		
