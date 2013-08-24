@@ -12,24 +12,6 @@
 			<c:forEach var="error" items="${errors}"><li>${error.category} - ${error.message}</li></c:forEach>
 		</span>
 		
-		<div style="text-align: center;">
-			<h3>Saldo:
-				<c:choose>
-					<c:when test="${usuarioSession.usuario.saldo < 0}">
-						<span style="color: red;">
-					</c:when>
-					<c:when test="${usuarioSession.usuario.saldo > 0}">
-						<span style="color: blue;">
-					</c:when>
-					<c:otherwise>
-						<span>
-					</c:otherwise>
-				</c:choose> 
-					${usuarioSession.usuario.saldo}
-				</span>
-			</h3>
-		</div>
-	
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -55,7 +37,7 @@
 						<td>${conta.data}</td>
 						<td>R$ ${conta.valor}</td>
 						<td>
-							<a href="<c:url value='/conta/atualiza/${conta.id}' />"><img title="Editar" src=<c:url value='/images/editar.png' /> /></a>
+							<a href="<c:url value='/conta/atualiza/${conta.id}' />"><img title="Editar" src="<c:url value='/images/editar.png' />" /></a>
 							<a href="<c:url value='/conta/deleta/${conta.id}' />"><img title="Deletar" src="<c:url value='/images/delete.png' />" /></a>
 						</td>
 					</tr>

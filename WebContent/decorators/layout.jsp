@@ -68,17 +68,17 @@
 	    	<h3 id="myModalLabel">Pesquisar por Período</h3>
   		</div>
   		<div class="modal-body">
-			<form class="form-horizontal">
+			<form class="form-horizontal" action="<c:url value="/conta/pesquisaPorPeriodo" />">
 				<div class="control-group">
 					<label class="control-label">Data Inicial:</label>
 					<div class="controls">
-						<input type="text" />
+						<input type="text" name="dataInicio" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">Data Final:</label>
 					<div class="controls">
-						<input type="text" />
+						<input type="text" name="dataFim" />
 					</div>
 				</div>
 				<div class="controls">
