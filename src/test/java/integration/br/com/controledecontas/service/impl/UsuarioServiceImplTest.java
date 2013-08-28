@@ -24,7 +24,7 @@ import br.com.controledecontas.service.UsuarioService;
 @Transactional
 public class UsuarioServiceImplTest {
 
-	private static final String DATASET = "test/integration/base/dbunit/xml/UsuarioServiceImplTest.xml";
+	private static final String DATASET = "src/test/java/integration/base/dbunit/xml/UsuarioServiceImplTest.xml";
 	
 	private static final Integer ID_VALIDO = 9999;
 	private static final Integer ID_INVALIDO = -1;

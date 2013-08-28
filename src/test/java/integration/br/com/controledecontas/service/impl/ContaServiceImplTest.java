@@ -34,7 +34,7 @@ import br.com.controledecontas.service.UsuarioService;
 @Transactional
 public class ContaServiceImplTest {
 
-	private static final String DATASET = "test/integration/base/dbunit/xml/ContaServiceImplTest.xml";
+	private static final String DATASET = "src/test/java/integration/base/dbunit/xml/ContaServiceImplTest.xml";
 	
 	private static final Integer ID_VALIDO_CONTA = 9999;
 	private static final Integer ID_INVALIDO_CONTA = -1;
