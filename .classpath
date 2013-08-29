@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="main/java/|main/|test/java/integration/|test/java/unit/" kind="src" path="src"/>
+	<classpathentry excluding="main/java/|main/|test/java/integration/|test/java/unit/|main/resources/|main/resources/" kind="src" path="src"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java/integration"/>
 	<classpathentry kind="src" path="src/test/java/unit"/>
+	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>

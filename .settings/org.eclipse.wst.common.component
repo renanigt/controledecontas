@@ -6,6 +6,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java/integration"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java/unit"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <property name="context-root" value="controledecontas"/>
         <property name="java-output-path" value="/controledecontas/build/classes"/>
     </wb-module>
