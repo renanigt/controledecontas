@@ -1,6 +1,8 @@
-*.class
+bin/
+build/
+.classpath
+.project
+.settings/
+.gradle/
+.DS_Store
 WebContent/WEB-INF/classes/
-.metadata
-.externalToolBuilders/
-target/
-build
