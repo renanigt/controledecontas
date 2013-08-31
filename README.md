@@ -9,7 +9,8 @@ Configurando para o Eclipse
 ------------------
 1. Abra o terminal
 2. Vá até a pasta do projeto
-3. Rode o comando **./gradlew eclipse**.
+3. Rode o comando:
+    ./gradlew eclipse
 4. Agora basta fazer o import do projeto no Eclipse.
 
 Dar build no projeto
