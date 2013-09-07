@@ -83,7 +83,7 @@ public class ContaController {
 			result.include("erro", e.getMessage());
 		}
 		
-		result.redirectTo(IndexController.class).index();
+		result.redirectTo(this).index();
 	}
 
 	@Post
