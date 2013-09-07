@@ -54,7 +54,7 @@
 						<td>${conta.tipoConta.descricao}</td>
 						<td>${conta.data}</td>
 						<td>R$ ${conta.valor}</td>
-						<td id="acoes">
+						<td class="acoes">
 							<a href="<c:url value='/conta/atualiza/${conta.id}' />"><img title="Editar" src=<c:url value='/images/editar.png' /> /></a>
 							<input type="hidden" id='urlDelete${index.index}' value="<c:url value='/conta/deleta/${conta.id}' />" />
 							<a href="#" id="delete${index.index}"><img title="Deletar" src="<c:url value='/images/delete.png' />" /></a>
