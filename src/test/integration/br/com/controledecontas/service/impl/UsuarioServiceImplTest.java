@@ -18,8 +18,8 @@ import br.com.controledecontas.service.UsuarioService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
- "file:./WebContent/WEB-INF/config/spring/applicationContext.xml",
- "file:./WebContent/WEB-INF/config/spring/applicationContext-persistence-test.xml"
+ "file:./src/main/webapp/WEB-INF/config/spring/applicationContext.xml",
+ "file:./src/main/webapp/WEB-INF/config/spring/applicationContext-persistence-test.xml"
 })
 @Transactional
 public class UsuarioServiceImplTest {

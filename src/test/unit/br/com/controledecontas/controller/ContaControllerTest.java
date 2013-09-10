@@ -21,9 +21,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
-import br.com.caelum.vraptor.util.test.MockResult;
+import br.com.caelum.vraptor.util.test.MockSerializationResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.controledecontas.model.Conta;
@@ -37,7 +36,10 @@ import com.google.common.collect.Lists;
 
 public class ContaControllerTest {
 
-	private Result result;
+	private static final String usuarioJson = "{\"usuario\": {\"id\": 1,\"nome\": \"Renan\",\"username\": \"renanigt\"," +
+			"\"password\": \"teste\",\"saldo\": \"0.00\"}}";
+	
+	private MockSerializationResult result;
 	private ContaController controller;
 	private Validator validator;
 
@@ -49,7 +51,7 @@ public class ContaControllerTest {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		result = new MockResult();
+		result = new MockSerializationResult();
 		validator = new MockValidator();
 		controller = new ContaController(result, service, usuarioSession, validator);
 	}
@@ -156,16 +158,17 @@ public class ContaControllerTest {
 	}
 	
 	@Test
-	public void deveriaDeletarUmaConta() {
+	public void deveriaDeletarUmaConta() throws Exception {
 		Conta conta = conta();
 		
+		when(usuarioSession.getUsuario()).thenReturn(criaUsuario());
 		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
 		
 		controller.deletar(conta.getId());
 		
 		verify(service).deleta(conta);
 		
-		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
+		assertEquals(usuarioJson, result.serializedResult());
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
 	
