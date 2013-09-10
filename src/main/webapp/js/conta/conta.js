@@ -9,8 +9,19 @@ $(document).ready(function() {
 				$.ajax({
 					type: "GET",
 					url: $("#urlDelete" + index).val(),
-					success: function() {
+					success: function(json) {
+						var saldo = json.usuario.saldo;
+						
 						$("#urlDelete" + index).parent().parent().remove();
+						$("#saldo").html(json.usuario.saldo);
+						
+						if(saldo > 0) {
+							$("#saldo").css("color", "blue");
+						} else if(saldo < 0) {
+							$("#saldo").css("color", "red");
+						} else {
+							$("#saldo").css("color", "black");
+						}
 					}
 				});
 			}

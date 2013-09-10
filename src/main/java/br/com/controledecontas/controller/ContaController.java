@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
+import br.com.caelum.vraptor.view.Results;
 import br.com.controledecontas.model.Conta;
 import br.com.controledecontas.model.TipoConta;
 import br.com.controledecontas.model.Usuario;
@@ -116,7 +117,7 @@ public class ContaController {
 		
 		try {
 			service.deleta(conta);
-			result.include("notice", "Conta removida com sucesso!");
+			result.use(Results.json()).from(usuario).serialize();
 		} catch(Exception e) {
 			result.include("erro", e.getMessage());
 		}

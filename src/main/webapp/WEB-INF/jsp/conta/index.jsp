@@ -16,13 +16,13 @@
 			<h3>Saldo:
 				<c:choose>
 					<c:when test="${usuarioSession.usuario.saldo < 0}">
-						<span style="color: red;">
+						<span style="color: red;" id="saldo">
 					</c:when>
 					<c:when test="${usuarioSession.usuario.saldo > 0}">
-						<span style="color: blue;">
+						<span style="color: blue;" id="saldo">
 					</c:when>
 					<c:otherwise>
-						<span>
+						<span id="saldo">
 					</c:otherwise>
 				</c:choose> 
 					${usuarioSession.usuario.saldo}
