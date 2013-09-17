@@ -22,6 +22,10 @@ $(document).ready(function() {
 						} else {
 							$("#saldo").css("color", "black");
 						}
+					},
+					error: function(json) {
+						var erro = $.parseJSON(json.responseText);
+						$("#errors").html(erro);
 					}
 				});
 			}

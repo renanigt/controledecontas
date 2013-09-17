@@ -119,10 +119,10 @@ public class ContaController {
 			service.deleta(conta);
 			result.use(Results.json()).from(usuario).serialize();
 		} catch(Exception e) {
-			result.include("erro", e.getMessage());
+			result.use(Results.http()).setStatusCode(400);
+			result.use(Results.json()).withoutRoot().from(e.getMessage()).serialize();
 		}
 		
-		result.redirectTo(this).index();
 	}
 	
 	@Get

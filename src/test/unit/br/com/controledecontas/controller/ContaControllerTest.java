@@ -38,6 +38,8 @@ public class ContaControllerTest {
 
 	private static final String usuarioJson = "{\"usuario\": {\"id\": 1,\"nome\": \"Renan\",\"username\": \"renanigt\"," +
 			"\"password\": \"teste\",\"saldo\": \"0.00\"}}";
+
+	private static final String errorJson = "\"ERRO\"";
 	
 	private MockSerializationResult result;
 	private ContaController controller;
@@ -173,18 +175,17 @@ public class ContaControllerTest {
 	}
 	
 	@Test
-	public void naoDeveriaDeletarUmaContaException() {
+	public void naoDeveriaDeletarUmaContaException() throws Exception {
 		Conta conta = conta();
 		
 		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
-		doThrow(new RuntimeException()).when(service).deleta(conta);
+		doThrow(new RuntimeException("ERRO")).when(service).deleta(conta);
 		
 		controller.deletar(conta.getId());
 		
 		verify(service).deleta(conta);
 		
-		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erro"));
-		assertFalse("Não deveria conter mensagem de successo.", result.included().containsKey("notice"));
+		assertEquals(errorJson, result.serializedResult());
 	}
 	
 	@Test

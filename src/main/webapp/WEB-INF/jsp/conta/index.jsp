@@ -8,9 +8,8 @@
 </head>
 <body>
 	<div class="container container-page">
-		<span>
-			<c:forEach var="error" items="${errors}"><li>${error.category} - ${error.message}</li></c:forEach>
-		</span>
+		<div id="errors" class="alert alert-error">
+		</div>
 		
 		<div style="text-align: center;">
 			<h3>Saldo:
