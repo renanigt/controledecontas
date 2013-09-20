@@ -8,7 +8,13 @@
 </head>
 <body>
 	<div class="container container-page">
-		<div id="errors" class="alert alert-error">
+		<div id="erro" class="alert alert-error" style="display:none;">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<span id="mensagemErro"></span>
+		</div>
+		<div id="sucesso" class="alert alert-success" style="display:none;">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<span id="mensagemSucesso"></span>
 		</div>
 		
 		<div style="text-align: center;">

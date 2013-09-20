@@ -8,7 +8,9 @@
 </head>
 <body>
 	<div class="container container-page">
-		<div id="errors" class="alert alert-error">
+		<div id="erro" class="alert alert-error">
+		</div>
+		<div id="sucesso" class="alert alert-success">
 		</div>
 		
 		<table class="table table-striped">

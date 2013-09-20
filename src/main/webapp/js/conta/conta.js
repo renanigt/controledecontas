@@ -10,11 +10,15 @@ $(document).ready(function() {
 					type: "GET",
 					url: $("#urlDelete" + index).val(),
 					success: function(json) {
-						var saldo = json.usuario.saldo;
+						var saldo = json.saldo;
+						var mensagem = json.mensagem;
 						
 						$("#urlDelete" + index).parent().parent().remove();
-						$("#saldo").html(json.usuario.saldo);
-						
+						$("#saldo").html(saldo);
+
+						$("#mensagemSucesso").html(mensagem);
+						$("#sucesso").fadeIn("slow");
+
 						if(saldo > 0) {
 							$("#saldo").css("color", "blue");
 						} else if(saldo < 0) {
@@ -25,7 +29,8 @@ $(document).ready(function() {
 					},
 					error: function(json) {
 						var erro = $.parseJSON(json.responseText);
-						$("#errors").html(erro);
+						$("#mensagemErro").html(erro);
+						$("#erro").fadeIn("slow");
 					}
 				});
 			}

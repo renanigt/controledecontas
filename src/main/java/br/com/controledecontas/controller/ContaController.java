@@ -19,6 +19,7 @@ import br.com.controledecontas.model.TipoConta;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.ContaService;
+import br.com.controledecontas.wrapper.ContaWrapper;
 
 @Resource
 public class ContaController {
@@ -117,7 +118,12 @@ public class ContaController {
 		
 		try {
 			service.deleta(conta);
-			result.use(Results.json()).from(usuario).serialize();
+			
+			ContaWrapper contaWrapper = new ContaWrapper();
+			contaWrapper.setSaldo(usuario.getSaldo());
+			contaWrapper.setMensagem("Conta removida com sucesso !");
+			
+			result.use(Results.json()).withoutRoot().from(contaWrapper).serialize();
 		} catch(Exception e) {
 			result.use(Results.http()).setStatusCode(400);
 			result.use(Results.json()).withoutRoot().from(e.getMessage()).serialize();

@@ -36,10 +36,9 @@ import com.google.common.collect.Lists;
 
 public class ContaControllerTest {
 
-	private static final String usuarioJson = "{\"usuario\": {\"id\": 1,\"nome\": \"Renan\",\"username\": \"renanigt\"," +
-			"\"password\": \"teste\",\"saldo\": \"0.00\"}}";
+	private static final String SUCESSO_DELETE_JSON = "{\"saldo\": \"0.00\",\"mensagem\": \"Conta removida com sucesso !\"}";
 
-	private static final String errorJson = "\"ERRO\"";
+	private static final String ERRO_DELETE_JSON = "\"ERRO\"";
 	
 	private MockSerializationResult result;
 	private ContaController controller;
@@ -170,7 +169,7 @@ public class ContaControllerTest {
 		
 		verify(service).deleta(conta);
 		
-		assertEquals(usuarioJson, result.serializedResult());
+		assertEquals(SUCESSO_DELETE_JSON, result.serializedResult());
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
 	
@@ -185,7 +184,7 @@ public class ContaControllerTest {
 		
 		verify(service).deleta(conta);
 		
-		assertEquals(errorJson, result.serializedResult());
+		assertEquals(ERRO_DELETE_JSON, result.serializedResult());
 	}
 	
 	@Test
