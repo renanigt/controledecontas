@@ -8,13 +8,28 @@
 </head>
 <body>
 	<div class="container container-page">
-		<div id="erro" class="alert alert-error" style="display:none;">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<span id="mensagemErro"></span>
+		<c:choose>
+			<c:when test="${erro != null}">
+				<div id="erro" class="alert alert-error">
+			</c:when>
+			<c:otherwise>
+				<div id="erro" class="alert alert-error" style="display:none;">
+			</c:otherwise>
+		</c:choose>
+			<button type="button" class="close">&times;</button>
+			<span id="mensagemErro">${erro}</span>
 		</div>
-		<div id="sucesso" class="alert alert-success" style="display:none;">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<span id="mensagemSucesso"></span>
+		
+		<c:choose>
+			<c:when test="${notice != null}">
+				<div id="sucesso" class="alert alert-success">
+			</c:when>
+			<c:otherwise>
+				<div id="sucesso" class="alert alert-success" style="display:none;">
+			</c:otherwise>
+		</c:choose>
+			<button type="button" class="close">&times;</button>
+			<span id="mensagemSucesso">${notice}</span>
 		</div>
 		
 		<div style="text-align: center;">

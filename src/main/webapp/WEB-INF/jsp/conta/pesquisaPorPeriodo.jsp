@@ -8,9 +8,14 @@
 </head>
 <body>
 	<div class="container container-page">
-		<div id="erro" class="alert alert-error">
+		<div id="erro" class="alert alert-error" style="display:none;">
+			<button type="button" class="close">&times;</button>
+			<span id="mensagemErro"></span>
 		</div>
-		<div id="sucesso" class="alert alert-success">
+		
+		<div id="sucesso" class="alert alert-success" style="display:none;">
+			<button type="button" class="close">&times;</button>
+			<span id="mensagemSucesso"></span>
 		</div>
 		
 		<table class="table table-striped">
@@ -47,5 +52,7 @@
 		</table>
 	</div>
 	
+	<script src="<c:url value="/js/jquery-1.8.1.min.js"/>"></script>
+	<script src="<c:url value="/js/conta/conta.js"/>"></script>
 </body>
 </html>

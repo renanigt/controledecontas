@@ -1,5 +1,11 @@
 $(document).ready(function() {
 	
+	$(".close").each(function() {
+		$(this).click(function() {
+			$(this).parent().fadeOut("slow");
+		});
+	});
+	
 	$(".acoes").each(function(index) {
 		$("#delete" + index).click(function() {
 			
