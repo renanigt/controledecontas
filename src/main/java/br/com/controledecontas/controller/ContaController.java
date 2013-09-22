@@ -137,6 +137,16 @@ public class ContaController {
 		List<Conta> contas = service.pesquisarPorPeriodo(usuarioSession.getUsuario(), dataInicio, dataFim);
 		
 		result.include("contas", contas);
+		result.forwardTo(this).lista();
+	}
+
+	@Get
+	@Path("/conta/pesquisaPorDescricao")
+	public void pesquisaPorDescricao(String descricao) {
+		List<Conta> contas = service.pesquisaPorDescricao(usuarioSession.getUsuario(), descricao);
+		
+		result.include("contas", contas);
+		result.forwardTo(this).lista();
 	}
 	
 	private void validaCamposObrigatorios(final Conta conta) {

@@ -43,8 +43,8 @@
 				                </ul>
 			                </li>
 						</ul>
-						<form class="navbar-search pull-left">
-						  <input type="text" class="search-query" placeholder="Pesquisar">
+						<form class="navbar-search pull-left" action="<c:url value="/conta/pesquisaPorDescricao" />">
+						  <input type="text" name="descricao" class="search-query" placeholder="Pesquisar">
 						</form>
 						<ul class="nav pull-right">
 							<li class="dropdown">

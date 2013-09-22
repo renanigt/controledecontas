@@ -200,6 +200,19 @@ public class ContaControllerTest {
 		assertTrue("Deve conter uma lista de contas.", result.included().containsKey("contas"));
 	}
 
+	@Test
+	public void deveriaPesquisarContaPorDescricao() {
+		List<Conta> contas = Lists.newArrayList(conta());
+		
+		when(service.pesquisaPorDescricao(any(Usuario.class), any(String.class))).thenReturn(contas);
+		
+		controller.pesquisaPorDescricao("Crédito");
+		
+		verify(usuarioSession).getUsuario();
+		
+		assertTrue("Deve conter uma lista de contas.", result.included().containsKey("contas"));
+	}
+
 	private Conta conta() {
 		Conta conta = new Conta();
 		
