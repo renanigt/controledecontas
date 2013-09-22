@@ -29,7 +29,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${contas}" var="conta">
+				<c:forEach items="${contas}" var="conta" varStatus="index">
 					<c:choose>
 						<c:when test="${conta.tipoConta == 'CREDITO'}">
 							<tr style="color: blue;">
