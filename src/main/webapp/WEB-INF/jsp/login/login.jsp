@@ -36,7 +36,5 @@
 			</form>
 		</fieldset>
 	</div>
-	
-	<script src="<c:url value="/js/login/login.js"/>"></script>
 </body>
 </html>
