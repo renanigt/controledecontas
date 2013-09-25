@@ -11,6 +11,8 @@
 <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet" media="screen">
 <link href="<c:url value="/css/bootstrap-responsive.min.css"/>" rel="stylesheet" media="screen">
 
+<script src="<c:url value="/js/jquery-1.8.1.min.js"/>"></script>
+
 <style type="text/css">
 	.container-page {
 		margin-top: 60px;
@@ -90,7 +92,6 @@
 	</div>	
 	<decorator:body />
 	
-	<script src="<c:url value="/js/jquery-1.8.1.min.js"/>"></script>
 	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 </body>
 </html>

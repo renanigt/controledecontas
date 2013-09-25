@@ -43,7 +43,7 @@ public class UsuarioController {
 			result.include("erros", e.getMessage());
 		}
 		
-		result.redirectTo(IndexController.class).index();
+		result.redirectTo(LoginController.class).login();
 	}
 	
 	private void validaCamposObrigatorios(final Usuario usuario) {
