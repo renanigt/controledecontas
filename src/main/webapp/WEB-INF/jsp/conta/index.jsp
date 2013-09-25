@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 
 <html>
 <head>
@@ -44,8 +45,8 @@
 					<c:otherwise>
 						<span id="saldo">
 					</c:otherwise>
-				</c:choose> 
-					${usuarioSession.usuario.saldo}
+				</c:choose>
+					<fmt:formatNumber value="${usuarioSession.usuario.saldo}" minFractionDigits="2" type="currency"/> 
 				</span>
 			</h3>
 		</div>
@@ -73,7 +74,7 @@
 						<td>${conta.descricao}</td>
 						<td>${conta.tipoConta.descricao}</td>
 						<td>${conta.data}</td>
-						<td>R$ ${conta.valor}</td>
+						<td><fmt:formatNumber value="${conta.valor}" minFractionDigits="2" type="currency"/></td>
 						<td class="acoes">
 							<a href="<c:url value='/conta/atualiza/${conta.id}' />"><img title="Editar" src=<c:url value='/images/editar.png' /> /></a>
 							<input type="hidden" id='urlDelete${index.index}' value="<c:url value='/conta/deleta/${conta.id}' />" />
@@ -85,7 +86,6 @@
 		</table>
 	</div>
 	
-	<script src="<c:url value="/js/jquery-1.8.1.min.js"/>"></script>
 	<script src="<c:url value="/js/conta/conta.js"/>"></script>
 </body>
 </html>
