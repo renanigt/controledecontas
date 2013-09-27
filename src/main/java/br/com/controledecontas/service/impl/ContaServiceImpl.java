@@ -90,10 +90,11 @@ public class ContaServiceImpl implements ContaService {
 			return Collections.emptyList();
 		}
 		
-		String hql = "from Conta where descricao like :descricao";
+		String hql = "from Conta where usuario_id = :userId and descricao like :descricao";
 		
 		Query query = entityManager.createQuery(hql);
 		
+		query.setParameter("userId", usuario.getId());
 		query.setParameter("descricao", "%" + descricao + "%");
 		
 		return query.getResultList();
