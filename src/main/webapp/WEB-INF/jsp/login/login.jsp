@@ -14,6 +14,13 @@
 </head>
 <body>
 	<div class="container-page container-login">
+		<c:if test="${notice != null}">
+			<div id="sucesso" class="alert alert-success">
+				<button type="button" class="close">&times;</button>
+				<span id="mensagemErro">${notice}</span>
+			</div>
+		</c:if>
+	
 		<fieldset>
 			<legend>Login</legend><br />
 			<form class="form-horizontal" action="<c:url value="/login/logar" />" name="form_usuario" method="post">
@@ -36,5 +43,7 @@
 			</form>
 		</fieldset>
 	</div>
+	
+	<script src="<c:url value="/js/login/login.js"/>"></script>
 </body>
 </html>
