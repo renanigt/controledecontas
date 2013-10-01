@@ -12,6 +12,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.core.Localization;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.caelum.vraptor.view.Results;
 import br.com.controledecontas.model.Conta;
@@ -28,12 +29,15 @@ public class ContaController {
 	private ContaService service;
 	private UsuarioSession usuarioSession;
 	private Validator validator;
+	private Localization localization;
 	
-	public ContaController(Result result, ContaService contaService, UsuarioSession usuarioSession, Validator validator) {
+	public ContaController(Result result, ContaService contaService, 
+			UsuarioSession usuarioSession, Validator validator, Localization localization) {
 		this.result = result;
 		this.service = contaService;
 		this.usuarioSession = usuarioSession;
 		this.validator = validator;
+		this.localization = localization;
 	}
 
 	@Get
@@ -79,7 +83,7 @@ public class ContaController {
 		
 		try {
 			service.salva(conta);
-			result.include("notice", "Conta salva com sucesso!");
+			result.include("notice", localization.getMessage("conta.salva.sucesso"));
 		} catch(Exception e) {
 			usuario.voltaAoSaldoAnterior();
 			result.include("erro", e.getMessage());
@@ -100,7 +104,7 @@ public class ContaController {
 			Conta contaAnterior = service.pesquisaPorId(conta.getId());
 			
 			service.atualiza(conta, contaAnterior);
-			result.include("notice", "Conta atualizada com sucesso!");
+			result.include("notice", localization.getMessage("conta.atualizada.sucesso"));
 			result.redirectTo(IndexController.class).index();
 		} catch(Exception e) {
 			result.include("erro", e.getMessage());
@@ -151,10 +155,10 @@ public class ContaController {
 	
 	private void validaCamposObrigatorios(final Conta conta) {
 		validator.checking(new Validations() {{
-			that(conta.getDescricao() != null && !conta.getDescricao().trim().isEmpty(), "Descrição", "Campo não pode ser vazio.");
-			that(conta.getValor() != null && conta.getValor().compareTo(new BigDecimal("0.00")) != 0, "Valor", "Campo não pode ser vazio");
+			that(conta.getDescricao() != null && !conta.getDescricao().trim().isEmpty(), "Descrição", "campo.nao.vazio");
+			that(conta.getValor() != null && conta.getValor().compareTo(new BigDecimal("0.00")) != 0, "Valor", "campo.nao.vazio");
 			that(conta.getData() != null, "Data", "Campo não pode ser vazio");
-			that(conta.getTipoConta() != null, "Tipo Conta", "Campo não pode ser vazio");
+			that(conta.getTipoConta() != null, "Tipo Conta", "campo.nao.vazio");
 		}});
 	}
 

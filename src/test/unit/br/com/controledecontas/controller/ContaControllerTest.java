@@ -22,6 +22,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.core.Localization;
+import br.com.caelum.vraptor.util.test.MockLocalization;
 import br.com.caelum.vraptor.util.test.MockSerializationResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.caelum.vraptor.validator.ValidationException;
@@ -43,6 +45,7 @@ public class ContaControllerTest {
 	private MockSerializationResult result;
 	private ContaController controller;
 	private Validator validator;
+	private Localization localization;
 
 	@Mock
 	private ContaService service;
@@ -54,7 +57,8 @@ public class ContaControllerTest {
 		MockitoAnnotations.initMocks(this);
 		result = new MockSerializationResult();
 		validator = new MockValidator();
-		controller = new ContaController(result, service, usuarioSession, validator);
+		localization = new MockLocalization();
+		controller = new ContaController(result, service, usuarioSession, validator, localization);
 	}
 	
 	@Test
@@ -101,6 +105,7 @@ public class ContaControllerTest {
 		assertNotNull("Usuário não deve ser nulo", conta.getUsuario());
 		assertEquals(criaUsuario().getId(), conta.getUsuario().getId());
 		assertTrue("Deveria retornar mensagem de sucesso.", result.included().containsKey("notice"));
+		assertEquals(localization.getMessage("conta.salva.sucesso"), result.included().get("notice"));
 		assertFalse("Não deveria conter mensagem de erro.", result.included().containsKey("erros"));
 	}
 	
@@ -136,6 +141,7 @@ public class ContaControllerTest {
 		verify(usuarioSession).getUsuario();
 		
 		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
+		assertEquals(localization.getMessage("conta.atualizada.sucesso"), result.included().get("notice"));
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
 	

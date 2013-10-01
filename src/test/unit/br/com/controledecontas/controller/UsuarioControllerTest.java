@@ -1,5 +1,6 @@
 package br.com.controledecontas.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doThrow;
@@ -12,6 +13,8 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.core.Localization;
+import br.com.caelum.vraptor.util.test.MockLocalization;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.caelum.vraptor.validator.ValidationException;
@@ -23,6 +26,7 @@ public class UsuarioControllerTest {
 	private Result result;
 	private UsuarioController usuarioController;
 	private Validator validator;
+	private Localization localization;
 	
 	@Mock
 	private UsuarioService usuarioService;
@@ -32,7 +36,8 @@ public class UsuarioControllerTest {
 		MockitoAnnotations.initMocks(this);
 		result = new MockResult();
 		validator = new MockValidator();
-		usuarioController = new UsuarioController(result, usuarioService, validator);
+		localization = new MockLocalization();
+		usuarioController = new UsuarioController(result, usuarioService, validator, localization);
 	}
 
 	@Test
@@ -50,6 +55,7 @@ public class UsuarioControllerTest {
 		verify(usuarioService).salva(usuario);
 		
 		assertTrue("Não deve conter erros.", result.included().containsKey("notice"));
+		assertEquals(localization.getMessage("usuario.salvo.sucesso"), result.included().get("notice"));
 		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
 	}
 	
