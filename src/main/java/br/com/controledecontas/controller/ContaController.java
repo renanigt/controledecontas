@@ -123,9 +123,7 @@ public class ContaController {
 		try {
 			service.deleta(conta);
 			
-			ContaWrapper contaWrapper = new ContaWrapper();
-			contaWrapper.setSaldo(usuario.getSaldo());
-			contaWrapper.setMensagem("Conta removida com sucesso !");
+			ContaWrapper contaWrapper = new ContaWrapper(conta, localization.getMessage("conta.removida.sucesso"));
 			
 			result.use(Results.json()).withoutRoot().from(contaWrapper).serialize();
 		} catch(Exception e) {

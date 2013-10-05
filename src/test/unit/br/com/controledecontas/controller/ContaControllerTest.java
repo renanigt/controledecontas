@@ -10,6 +10,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,16 +33,17 @@ import br.com.controledecontas.model.TipoConta;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.ContaService;
+import br.com.controledecontas.wrapper.ContaWrapper;
 
 import com.google.common.collect.Lists;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
+import com.thoughtworks.xstream.io.json.JsonWriter;
 
 
 public class ContaControllerTest {
 
-	private static final String SUCESSO_DELETE_JSON = "{\"saldo\": \"0.00\",\"mensagem\": \"Conta removida com sucesso !\"}";
-
-	private static final String ERRO_DELETE_JSON = "\"ERRO\"";
-	
 	private MockSerializationResult result;
 	private ContaController controller;
 	private Validator validator;
@@ -139,6 +141,7 @@ public class ContaControllerTest {
 		verify(service).atualiza(any(Conta.class), any(Conta.class));
 		verify(usuarioSession).getUsuario();
 		
+		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
 		assertEquals(localization.getMessage("conta.atualizada.sucesso"), result.included().get("notice"));
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
@@ -170,10 +173,14 @@ public class ContaControllerTest {
 		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
 		
 		controller.deletar(conta.getId());
+
+		ContaWrapper wrapper = new ContaWrapper(conta, localization.getMessage("conta.removida.sucesso"));
 		
 		verify(service).deleta(conta);
 		
-		assertEquals(SUCESSO_DELETE_JSON, result.serializedResult());
+		XStream xstream = getXStream(false, true);
+		
+		assertEquals(xstream.toXML(wrapper), result.serializedResult());
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
 	
@@ -188,7 +195,9 @@ public class ContaControllerTest {
 		
 		verify(service).deleta(conta);
 		
-		assertEquals(ERRO_DELETE_JSON, result.serializedResult());
+		XStream xstream = getXStream(false, true);
+		
+		assertEquals(xstream.toXML("ERRO"), result.serializedResult());
 	}
 	
 	@Test
@@ -249,5 +258,30 @@ public class ContaControllerTest {
 		
 		return usuario;
 	}
+
+	private XStream getXStream(Boolean indented, final Boolean withoutRoot) {
+		String DEFAULT_NEW_LINE = "";
+	    char[] DEFAULT_LINE_INDENTER = {};
+	    
+	    String INDENTED_NEW_LINE = "\n";
+	    char[] INDENTED_LINE_INDENTER = {' ', ' '};
+	    
+        final String newLine = (indented ? INDENTED_NEW_LINE : DEFAULT_NEW_LINE);
+        final char[] lineIndenter = (indented ? INDENTED_LINE_INDENTER : DEFAULT_LINE_INDENTER);
+
+        XStream xstream = new XStream(new JsonHierarchicalStreamDriver() {
+            public HierarchicalStreamWriter createWriter(Writer writer) {
+                if (withoutRoot) {
+                    return new JsonWriter(writer, lineIndenter, newLine, JsonWriter.DROP_ROOT_MODE);
+                }
+
+                return new JsonWriter(writer, lineIndenter, newLine);
+            }
+        });
+        
+        xstream.setMode(XStream.NO_REFERENCES);
+        
+        return xstream;
+    }
 	
 }
