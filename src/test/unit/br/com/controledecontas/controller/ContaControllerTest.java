@@ -10,7 +10,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.Writer;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,14 +31,11 @@ import br.com.controledecontas.model.Conta;
 import br.com.controledecontas.model.TipoConta;
 import br.com.controledecontas.model.Usuario;
 import br.com.controledecontas.model.UsuarioSession;
+import br.com.controledecontas.serializer.JSONSerializer;
 import br.com.controledecontas.service.ContaService;
 import br.com.controledecontas.wrapper.ContaWrapper;
 
 import com.google.common.collect.Lists;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
-import com.thoughtworks.xstream.io.json.JsonWriter;
 
 
 public class ContaControllerTest {
@@ -178,26 +174,27 @@ public class ContaControllerTest {
 		
 		verify(service).deleta(conta);
 		
-		XStream xstream = getXStream(false, true);
+		String json = new JSONSerializer().withoutRoot().serialize(wrapper);
 		
-		assertEquals(xstream.toXML(wrapper), result.serializedResult());
+		assertEquals(json, result.serializedResult());
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
 	
 	@Test
 	public void naoDeveriaDeletarUmaContaException() throws Exception {
 		Conta conta = conta();
-		
+		String msgErro = "ERRO";
+				
 		when(service.pesquisaPorId(conta.getId())).thenReturn(conta);
-		doThrow(new RuntimeException("ERRO")).when(service).deleta(conta);
+		doThrow(new RuntimeException(msgErro)).when(service).deleta(conta);
 		
 		controller.deletar(conta.getId());
 		
 		verify(service).deleta(conta);
 		
-		XStream xstream = getXStream(false, true);
+		String json = new JSONSerializer().withoutRoot().serialize(msgErro);
 		
-		assertEquals(xstream.toXML("ERRO"), result.serializedResult());
+		assertEquals(json, result.serializedResult());
 	}
 	
 	@Test
@@ -259,29 +256,4 @@ public class ContaControllerTest {
 		return usuario;
 	}
 
-	private XStream getXStream(Boolean indented, final Boolean withoutRoot) {
-		String DEFAULT_NEW_LINE = "";
-	    char[] DEFAULT_LINE_INDENTER = {};
-	    
-	    String INDENTED_NEW_LINE = "\n";
-	    char[] INDENTED_LINE_INDENTER = {' ', ' '};
-	    
-        final String newLine = (indented ? INDENTED_NEW_LINE : DEFAULT_NEW_LINE);
-        final char[] lineIndenter = (indented ? INDENTED_LINE_INDENTER : DEFAULT_LINE_INDENTER);
-
-        XStream xstream = new XStream(new JsonHierarchicalStreamDriver() {
-            public HierarchicalStreamWriter createWriter(Writer writer) {
-                if (withoutRoot) {
-                    return new JsonWriter(writer, lineIndenter, newLine, JsonWriter.DROP_ROOT_MODE);
-                }
-
-                return new JsonWriter(writer, lineIndenter, newLine);
-            }
-        });
-        
-        xstream.setMode(XStream.NO_REFERENCES);
-        
-        return xstream;
-    }
-	
 }
