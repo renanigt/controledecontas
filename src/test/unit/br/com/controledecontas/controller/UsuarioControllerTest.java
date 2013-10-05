@@ -54,7 +54,6 @@ public class UsuarioControllerTest {
 		
 		verify(usuarioService).salva(usuario);
 		
-		assertTrue("Não deve conter erros.", result.included().containsKey("notice"));
 		assertEquals(localization.getMessage("usuario.salvo.sucesso"), result.included().get("notice"));
 		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
 	}

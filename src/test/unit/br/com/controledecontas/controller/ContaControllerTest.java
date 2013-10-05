@@ -104,7 +104,6 @@ public class ContaControllerTest {
 
 		assertNotNull("Usuário não deve ser nulo", conta.getUsuario());
 		assertEquals(criaUsuario().getId(), conta.getUsuario().getId());
-		assertTrue("Deveria retornar mensagem de sucesso.", result.included().containsKey("notice"));
 		assertEquals(localization.getMessage("conta.salva.sucesso"), result.included().get("notice"));
 		assertFalse("Não deveria conter mensagem de erro.", result.included().containsKey("erros"));
 	}
@@ -140,7 +139,6 @@ public class ContaControllerTest {
 		verify(service).atualiza(any(Conta.class), any(Conta.class));
 		verify(usuarioSession).getUsuario();
 		
-		assertTrue("Deveria conter uma mensagem de sucesso", result.included().containsKey("notice"));
 		assertEquals(localization.getMessage("conta.atualizada.sucesso"), result.included().get("notice"));
 		assertFalse("Não deveria conter uma mensagem de erro", result.included().containsKey("erro"));
 	}
