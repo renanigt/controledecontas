@@ -6,6 +6,10 @@ repositories {
 	mavenCentral()
 }
 
+tasks.withType(Compile) {
+    options.encoding = "UTF-8"
+} 
+
 sourceSets {
 	main {
 		output.resourcesDir = "build/classes/main"
