@@ -91,15 +91,9 @@ public class ContaServiceImplTest {
 	
 	@Test
 	public void deveriaAtualizarContaAlterandoSaldoDoUsuario() {
-		Conta conta = contaService.pesquisaPorId(ID_VALIDO_CONTA);
+		Conta conta = contaAtualizada();
 		Conta contaAnterior = contaEmprestimo();
-		
 		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 28);
-		
-		conta.setDescricao("Recebido pagamento.");
-		conta.setTipoConta(TipoConta.CREDITO);
-		conta.setData(dataConta.getTime());
-		conta.setValor(new BigDecimal("30.00"));
 		
 		contaService.atualiza(conta, contaAnterior);
 		
@@ -198,6 +192,19 @@ public class ContaServiceImplTest {
 		return conta;
 	}
 	
+	private Conta criaConta() {
+		Conta conta = new Conta();
+		GregorianCalendar data = new GregorianCalendar(2012, Calendar.JULY, 25);
+		
+		conta.setData(data.getTime());
+		conta.setDescricao("Supermercado");
+		conta.setTipoConta(TipoConta.DEBITO);
+		conta.setValor(new BigDecimal("13.43"));
+		conta.setUsuario(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO));
+		
+		return conta;
+	}
+
 	private void verificaDadosConta(Conta conta, Date data, String descricao, 
 			TipoConta tipoDeConta, BigDecimal valor, Integer idUsuario) {
 		assertEquals("Data", dateFormat.format(data), dateFormat.format(conta.getData()));
@@ -207,14 +214,15 @@ public class ContaServiceImplTest {
 		assertEquals("ID Usuário", idUsuario, conta.getUsuario().getId());
 	}
 	
-	private Conta criaConta() {
+	public Conta contaAtualizada() {
 		Conta conta = new Conta();
-		GregorianCalendar data = new GregorianCalendar(2012, Calendar.JULY, 25);
+		GregorianCalendar dataConta = new GregorianCalendar(2012, Calendar.JULY, 28);
 		
-		conta.setData(data.getTime());
-		conta.setDescricao("Supermercado");
-		conta.setTipoConta(TipoConta.DEBITO);
-		conta.setValor(new BigDecimal("13.43"));
+		conta.setId(9999);
+		conta.setDescricao("Recebido pagamento.");
+		conta.setTipoConta(TipoConta.CREDITO);
+		conta.setData(dataConta.getTime());
+		conta.setValor(new BigDecimal("30.00"));
 		conta.setUsuario(usuarioService.pesquisaPorId(ID_VALIDO_USUARIO));
 		
 		return conta;
