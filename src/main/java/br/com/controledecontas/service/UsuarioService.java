@@ -10,4 +10,6 @@ public interface UsuarioService {
 
 	Usuario autentica(String username, String password);
 
+	void atualiza(Usuario usuarioAtualizado);
+
 }

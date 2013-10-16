@@ -38,5 +38,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 			return null;
 		}
 	}
+
+	public void atualiza(Usuario usuario) {
+		Usuario usuarioAlterado = this.pesquisaPorId(usuario.getId());
+		usuarioAlterado.setNome(usuario.getNome());
+		usuarioAlterado.setUsername(usuario.getUsername());
+		usuarioAlterado.setPassword(usuario.getPassword());
+		
+		entityManager.merge(this.pesquisaPorId(usuario.getId()));
+	}
 	
 }

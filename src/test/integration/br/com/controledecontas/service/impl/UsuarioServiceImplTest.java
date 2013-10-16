@@ -1,8 +1,10 @@
 package br.com.controledecontas.service.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
+
+import java.math.BigDecimal;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -78,6 +80,18 @@ public class UsuarioServiceImplTest {
 		assertNull("Usuário deve ser nullo.", usuario);
 	}
 
+	@Test
+	public void deveriaAtualizarUsuarioSemAlterarSaldo() {
+		Usuario usuario = usuarioService.pesquisaPorId(ID_VALIDO);
+		
+		usuarioService.atualiza(usuarioAtualizado());
+		
+		assertEquals("Nome", "Renan Teixeira Lima Verde Montenegro", usuario.getNome());
+		assertEquals("Username", "renanlima", usuario.getUsername());
+		assertEquals("Password", "321", usuario.getPassword());
+		assertEquals("Saldo", new BigDecimal("50.00"), usuario.getSaldo());
+	}
+	
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
@@ -88,4 +102,13 @@ public class UsuarioServiceImplTest {
 		return usuario;
 	}
 	
+	private Usuario usuarioAtualizado() {
+		Usuario usuario = new Usuario();
+		usuario.setId(9999);
+		usuario.setNome("Renan Teixeira Lima Verde Montenegro");
+		usuario.setUsername("renanlima");
+		usuario.setPassword("321");
+		
+		return usuario;
+	}
 }
