@@ -77,9 +77,6 @@ public class UsuarioControllerTest {
 		assertFalse("Não deveria conter mesagem de sucesso.", result.included().containsKey("notice"));
 	}
 	
-//	@Test
-//	public void deveriaAtualizar
-	
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
