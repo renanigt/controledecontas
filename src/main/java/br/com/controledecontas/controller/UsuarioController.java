@@ -10,6 +10,7 @@ import br.com.caelum.vraptor.core.Localization;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.controledecontas.annotation.Public;
 import br.com.controledecontas.model.Usuario;
+import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.UsuarioService;
 
 @Public
@@ -20,13 +21,15 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	private Validator validator;
 	private Localization localization;
+	private UsuarioSession usuarioSession;
 	
 	public UsuarioController(Result result, UsuarioService usuarioService, 
-			Validator validator, Localization localization) {
+			Validator validator, Localization localization, UsuarioSession usuarioSession) {
 		this.result = result;
 		this.usuarioService = usuarioService;
 		this.validator = validator;
 		this.localization = localization;
+		this.usuarioSession = usuarioSession;
 	}
 
 	@Get
@@ -35,6 +38,16 @@ public class UsuarioController {
 
 	}
 
+	@Get
+	@Path("/usuario/atualiza/{id}")
+	public void edita(Integer id) {
+		if(usuarioSession.isLogado()) {
+			result.include("usuario", usuarioSession.getUsuario());
+		} else {
+			result.redirectTo(IndexController.class).index();
+		}
+	}
+	
 	@Post
 	@Path("/usuario/novo/salvar")
 	public void salva(Usuario usuario) {
@@ -46,6 +59,21 @@ public class UsuarioController {
 			result.redirectTo(LoginController.class).login();
 		} catch(Exception e) {
 			result.include("erros", e.getMessage());
+		}
+		
+	}
+	
+	@Post
+	@Path("/usuario/atualiza/salvar")
+	public void atualiza(Usuario usuario) {
+		validaCamposObrigatorios(usuario);
+		validator.onErrorForwardTo(this).edita(usuario.getId());
+		
+		try {
+			usuarioService.atualiza(usuario);
+			result.include("notice", localization.getMessage("usuario.atualizado.sucesso"));
+		} catch (Exception e) {
+			result.include("erros", e);
 		}
 		
 	}

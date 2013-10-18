@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.controledecontas.model.Usuario;
+import br.com.controledecontas.model.UsuarioSession;
 import br.com.controledecontas.service.UsuarioService;
 
 public class UsuarioControllerTest {
@@ -29,6 +31,8 @@ public class UsuarioControllerTest {
 	private Localization localization;
 	
 	@Mock
+	private UsuarioSession usuarioSession;
+	@Mock
 	private UsuarioService usuarioService;
 	
 	@Before
@@ -37,18 +41,37 @@ public class UsuarioControllerTest {
 		result = new MockResult();
 		validator = new MockValidator();
 		localization = new MockLocalization();
-		usuarioController = new UsuarioController(result, usuarioService, validator, localization);
+		usuarioController = new UsuarioController(result, usuarioService, validator, localization, usuarioSession);
 	}
 
 	@Test
-	public void deveriaAbrirTelaDeCadastroDeUsuario() {
+	public void deveriaAbrirPaginaDeCadastroDeUsuario() {
 		usuarioController.novo();
+		
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
 	}
 	
 	@Test
+	public void deveriaAbrirPaginaDeAtualizacaoComUsuarioLogado() {
+		when(usuarioSession.isLogado()).thenReturn(true);
+		
+		usuarioController.edita(1);
+		
+		assertTrue("Deve conter um usuario", result.included().containsKey("usuario"));
+	}
+
+	@Test
+	public void naoDeveriaAbrirPaginaDeAtualizacaoSemUsuarioLogado() {
+		when(usuarioSession.isLogado()).thenReturn(false);
+		
+		usuarioController.edita(1);
+		
+		assertFalse("Deve conter um usuario", result.included().containsKey("usuario"));
+	}
+	
+	@Test
 	public void deveriaSalvarUsuario() {
-		Usuario usuario = criaUsuario();
+		Usuario usuario = aquinofb();
 		
 		usuarioController.salva(usuario);
 		
@@ -67,7 +90,7 @@ public class UsuarioControllerTest {
 	
 	@Test
 	public void naoDeveriaSalvarUsuarioException() {
-		Usuario usuario = criaUsuario();
+		Usuario usuario = aquinofb();
 		
 		doThrow(new RuntimeException()).when(usuarioService).salva(usuario);
 		
@@ -77,7 +100,37 @@ public class UsuarioControllerTest {
 		assertFalse("Não deveria conter mesagem de sucesso.", result.included().containsKey("notice"));
 	}
 	
-	private Usuario criaUsuario() {
+	@Test
+	public void deveriaAtualizarUsuario() {
+		Usuario usuario = renanigt();
+		
+		usuarioController.atualiza(usuario);
+		verify(usuarioService).atualiza(usuario);
+		
+		assertEquals(localization.getMessage("usuario.atualizado.sucesso"), result.included().get("notice"));
+		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
+	}
+	
+	@Test(expected=ValidationException.class)
+	public void naoDeveriaAtualizarUsuarioVazio() {
+		Usuario usuario = criaUsuarioVazio();
+		
+		usuarioController.atualiza(usuario);
+	}
+	
+	@Test
+	public void naoDeveriaAtualizarUsuarioException() {
+		Usuario usuario = renanigt();
+		
+		doThrow(new RuntimeException()).when(usuarioService).atualiza(usuario);
+		
+		usuarioController.atualiza(usuario);
+		
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
+		assertFalse("Não deveria conter mesagem de sucesso.", result.included().containsKey("notice"));
+	}
+	
+	private Usuario aquinofb() {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("Felipe Aquino");
@@ -91,8 +144,19 @@ public class UsuarioControllerTest {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("");
-		usuario.setPassword("");
 		usuario.setUsername("");
+		usuario.setPassword("");
+		
+		return usuario;
+	}
+
+	private Usuario renanigt() {
+		Usuario usuario = new Usuario();
+		
+		usuario.setId(1);
+		usuario.setNome("Renan Montenegro");
+		usuario.setUsername("renanigt");
+		usuario.setPassword("123");
 		
 		return usuario;
 	}
