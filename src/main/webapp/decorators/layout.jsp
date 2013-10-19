@@ -52,7 +52,7 @@
 							<li class="dropdown">
 				                <a href="#" class="dropdown-toggle" data-toggle="dropdown">${usuarioSession.usuario.username}<b class="caret"></b></a>
 				                <ul class="dropdown-menu">
-					                <li><a href="#">Perfil</a></li>
+					                <li><a href="<c:url value="/usuario/atualiza/${usuarioSession.usuario.id}" />">Perfil</a></li>
 					                <li><a href="#">Alterar Senha</a></li>
 					                <li class="divider"></li>
 					                <li><a href="<c:url value="/login/logout" />">Logout</a></li>

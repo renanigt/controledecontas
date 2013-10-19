@@ -52,6 +52,7 @@ public class UsuarioController {
 	@Path("/usuario/novo/salvar")
 	public void salva(Usuario usuario) {
 		validaCamposObrigatorios(usuario);
+		validator.onErrorForwardTo(this).novo();
 		
 		try {
 			usuarioService.salva(usuario);
@@ -72,8 +73,10 @@ public class UsuarioController {
 		try {
 			usuarioService.atualiza(usuario);
 			result.include("notice", localization.getMessage("usuario.atualizado.sucesso"));
+			result.redirectTo(ContaController.class).index();
 		} catch (Exception e) {
 			result.include("erros", e);
+			result.redirectTo(this).edita(usuario.getId());
 		}
 		
 	}
@@ -84,8 +87,6 @@ public class UsuarioController {
 			that(usuario.getUsername() != null && !usuario.getUsername().trim().isEmpty(), "Username", "campo.nao.vazio");
 			that(usuario.getPassword() != null && !usuario.getPassword().trim().isEmpty(), "Password", "campo.nao.vazio");
 		}});
-
-		validator.onErrorForwardTo(this).novo();
 	}
 	
 }
