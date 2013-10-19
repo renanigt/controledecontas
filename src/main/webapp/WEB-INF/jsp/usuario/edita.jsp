@@ -2,13 +2,13 @@
 
 <html>
 <head>
-<title>Adicionar usuário !</title>
+<title>Alterar perfil !</title>
 </head>
 <body>
 	<div class="container container-page">
 	
 		<fieldset>
-			<legend>Editar Perfil</legend>
+			<legend>Alterar Perfil</legend>
 			
 			<c:if test="${not empty errors}">
 				<div id="erro" class="alert alert-error">
