@@ -97,10 +97,10 @@ public class Usuario implements Serializable {
 		return saldo;
 	}
 
-	public void alteraSaldo(Conta conta, Boolean isDelecao) {
+	public void alteraSaldo(Conta conta, Boolean isDelete) {
 		this.saldoAnterior = this.saldo;
 		
-		if(!isDelecao) {
+		if(!isDelete) {
 			if (conta.getTipoConta() == TipoConta.CREDITO) {
 				this.saldo = this.saldo.add(conta.getValor());
 			} else {
