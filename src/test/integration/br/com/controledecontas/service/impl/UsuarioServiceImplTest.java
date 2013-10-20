@@ -92,6 +92,13 @@ public class UsuarioServiceImplTest {
 		assertEquals("Saldo", new BigDecimal("50.00"), usuario.getSaldo());
 	}
 	
+	@Test
+	public void deveriaPesquisarPasswordDoUsuario() {
+		String password = usuarioService.pesquisarPassword(ID_VALIDO);
+		
+		assertEquals("Password", "123", password);
+	}
+	
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		

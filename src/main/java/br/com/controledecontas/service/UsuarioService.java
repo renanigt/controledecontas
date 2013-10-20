@@ -12,4 +12,6 @@ public interface UsuarioService {
 
 	void atualiza(Usuario usuarioAtualizado);
 
+	String pesquisarPassword(Integer id);
+
 }

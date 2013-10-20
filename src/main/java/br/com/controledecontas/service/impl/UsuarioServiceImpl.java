@@ -24,6 +24,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		entityManager.persist(usuario);
 	}
 
+	public void atualiza(Usuario usuario) {
+		Usuario usuarioAlterado = this.pesquisaPorId(usuario.getId());
+		usuarioAlterado.setNome(usuario.getNome());
+		usuarioAlterado.setUsername(usuario.getUsername());
+		usuarioAlterado.setPassword(usuario.getPassword());
+		
+		entityManager.merge(this.pesquisaPorId(usuario.getId()));
+	}
+	
 	public Usuario autentica(String username, String password) {
 		String hql = "from Usuario where username = :username and password = :password";
 		
@@ -39,13 +48,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 
-	public void atualiza(Usuario usuario) {
-		Usuario usuarioAlterado = this.pesquisaPorId(usuario.getId());
-		usuarioAlterado.setNome(usuario.getNome());
-		usuarioAlterado.setUsername(usuario.getUsername());
-		usuarioAlterado.setPassword(usuario.getPassword());
+	@Override
+	public String pesquisarPassword(Integer id) {
+		String hql = "select password from Usuario where id = :id";
 		
-		entityManager.merge(this.pesquisaPorId(usuario.getId()));
+		Query query = entityManager.createQuery(hql);
+		
+		query.setParameter("id", id);
+		
+		try {
+			return query.getSingleResult().toString();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
+
 	
 }
