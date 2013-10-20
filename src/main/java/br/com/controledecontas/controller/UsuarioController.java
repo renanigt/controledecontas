@@ -7,6 +7,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.core.Localization;
+import br.com.caelum.vraptor.validator.ValidationMessage;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.controledecontas.annotation.Public;
 import br.com.controledecontas.model.Usuario;
@@ -65,8 +66,8 @@ public class UsuarioController {
 	}
 	
 	@Post
-	@Path("/usuario/atualiza/salvar")
-	public void atualiza(Usuario usuario) {
+	@Path("/usuario/atualizaPerfil/salvar")
+	public void atualizaPerfil(Usuario usuario) {
 		validaCamposObrigatorios(usuario);
 		validator.onErrorForwardTo(this).edita(usuario.getId());
 		
@@ -76,16 +77,43 @@ public class UsuarioController {
 			result.redirectTo(ContaController.class).index();
 		} catch (Exception e) {
 			result.include("erros", e);
-			result.redirectTo(this).edita(usuario.getId());
+			result.forwardTo(this).edita(usuario.getId());
 		}
 		
 	}
 	
+	@Post
+	@Path("/usuario/atualizaPassword/salvar")
+	public void atualizaPassword(Usuario usuario, String passwordConfirm, String passwordAtual) {
+		String password = usuarioService.pesquisarPassword(usuario.getId());
+		
+		validaPassword(usuario, passwordConfirm);
+		if(!password.equals(passwordAtual)) {
+			validator.add(new ValidationMessage("usuario.passwordAtual.invalido", "Password Atual"));
+		}
+		validator.onErrorForwardTo(this).edita(usuario.getId());
+		
+		try {
+			usuarioService.atualiza(usuario);
+			result.include("notice", localization.getMessage("usuario.atualizado.sucesso"));
+			result.redirectTo(ContaController.class).index();
+		} catch (Exception e) {
+			result.include("erros", e);
+			result.forwardTo(this).edita(usuario.getId());
+		}
+	}
+
 	private void validaCamposObrigatorios(final Usuario usuario) {
 		validator.checking(new Validations() {{
 			that(usuario.getNome() != null && !usuario.getNome().trim().isEmpty(), "Nome", "campo.nao.vazio");
 			that(usuario.getUsername() != null && !usuario.getUsername().trim().isEmpty(), "Username", "campo.nao.vazio");
 			that(usuario.getPassword() != null && !usuario.getPassword().trim().isEmpty(), "Password", "campo.nao.vazio");
+		}});
+	}
+	
+	private void validaPassword(final Usuario usuario, final String passwordConfirm) {
+		validator.checking(new Validations() {{
+			that(usuario.getPassword().equals(passwordConfirm), "Confirmar Password", "usuario.password.confima.invalido");
 		}});
 	}
 	

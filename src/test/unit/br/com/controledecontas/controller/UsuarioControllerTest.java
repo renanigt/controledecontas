@@ -101,10 +101,10 @@ public class UsuarioControllerTest {
 	}
 	
 	@Test
-	public void deveriaAtualizarUsuario() {
+	public void deveriaAtualizarPerfilDoUsuario() {
 		Usuario usuario = renanigt();
 		
-		usuarioController.atualiza(usuario);
+		usuarioController.atualizaPerfil(usuario);
 		verify(usuarioService).atualiza(usuario);
 		
 		assertEquals(localization.getMessage("usuario.atualizado.sucesso"), result.included().get("notice"));
@@ -115,7 +115,7 @@ public class UsuarioControllerTest {
 	public void naoDeveriaAtualizarUsuarioVazio() {
 		Usuario usuario = criaUsuarioVazio();
 		
-		usuarioController.atualiza(usuario);
+		usuarioController.atualizaPerfil(usuario);
 	}
 	
 	@Test
@@ -124,10 +124,62 @@ public class UsuarioControllerTest {
 		
 		doThrow(new RuntimeException()).when(usuarioService).atualiza(usuario);
 		
-		usuarioController.atualiza(usuario);
+		usuarioController.atualizaPerfil(usuario);
 		
 		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
-		assertFalse("Não deveria conter mesagem de sucesso.", result.included().containsKey("notice"));
+		assertFalse("Não deveria conter mensagem de sucesso.", result.included().containsKey("notice"));
+	}
+	
+	@Test
+	public void deveriaAtualizarPasswordUsuario() {
+		Usuario usuario = renanigtPasswordAlterado();
+		String passwordConfirm = "321";
+		String passwordAtual = "123";
+		
+		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		
+		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
+		verify(usuarioService).atualiza(usuario);
+
+		assertEquals(localization.getMessage("usuario.atualizado.sucesso"), result.included().get("notice"));
+		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
+	}
+	
+	@Test
+	public void naoDeveriaAtualizarPasswordUsuarioException() {
+		Usuario usuario = renanigtPasswordAlterado();
+		String passwordConfirm = "321";
+		String passwordAtual = "123";
+		
+		doThrow(new RuntimeException()).when(usuarioService).atualiza(usuario);
+		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		
+		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
+		
+		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
+		assertFalse("Não deveria conter mensagem de sucesso.", result.included().containsKey("notice"));
+	}
+	
+	@Test(expected=ValidationException.class)
+	public void naoDevriaAtualizarPasswordUsuarioAtualDiferente() {
+		Usuario usuario = renanigtPasswordAlterado();
+		String passwordConfirm = "321";
+		String passwordAtual = "124";
+		
+		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		
+		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
+	}
+
+	@Test(expected=ValidationException.class)
+	public void naoDevriaAtualizarPasswordUsuarioConfirmDiferente() {
+		Usuario usuario = renanigtPasswordAlterado();
+		String passwordConfirm = "322";
+		String passwordAtual = "123";
+		
+		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		
+		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
 	}
 	
 	private Usuario aquinofb() {
@@ -157,6 +209,17 @@ public class UsuarioControllerTest {
 		usuario.setNome("Renan Montenegro");
 		usuario.setUsername("renanigt");
 		usuario.setPassword("123");
+		
+		return usuario;
+	}
+
+	private Usuario renanigtPasswordAlterado() {
+		Usuario usuario = new Usuario();
+		
+		usuario.setId(1);
+		usuario.setNome("Renan Montenegro");
+		usuario.setUsername("renanigt");
+		usuario.setPassword("321");
 		
 		return usuario;
 	}
