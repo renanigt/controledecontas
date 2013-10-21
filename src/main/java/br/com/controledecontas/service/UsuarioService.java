@@ -8,10 +8,10 @@ public interface UsuarioService {
 
 	void salva(Usuario usuario);
 
-	Usuario autentica(String username, String password);
+	Usuario autentica(String login, String senha);
 
 	void atualiza(Usuario usuarioAtualizado);
 
-	String pesquisarPassword(Integer id);
+	String pesquisarSenha(Integer id);
 
 }

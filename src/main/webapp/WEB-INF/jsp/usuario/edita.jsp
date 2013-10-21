@@ -17,8 +17,8 @@
 				</div>
 			</c:if>
 
-			<form class="form-horizontal" action="<c:url value="/usuario/atualiza/salvar" />" name="form_usuario" method="post">
-				<input type="hidden" name="usuario.password" value="${usuario.password}">
+			<form class="form-horizontal" action="<c:url value="/usuario/atualizaPerfil/salvar" />" name="form_usuario" method="post">
+				<input type="hidden" name="usuario.senha" value="${usuario.senha}">
 				<input type="hidden" name="usuario.id" value="${usuario.id}">
 				<div class="control-group">
 					<label class="control-label">Nome:</label>
@@ -28,10 +28,10 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Username:</label>
+					<label class="control-label">Login:</label>
 					<div class="controls">
-						<input type="text" name="usuario.username" id="username" size="15" maxlength="15"
-							value="${usuario.username}" />
+						<input type="text" name="usuario.login" id="login" size="15" maxlength="15"
+							value="${usuario.login}" />
 					</div>
 				</div>
 				<div class="controls">

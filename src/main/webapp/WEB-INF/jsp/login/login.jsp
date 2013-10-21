@@ -25,15 +25,15 @@
 			<legend>Login</legend><br />
 			<form class="form-horizontal" action="<c:url value="/login/logar" />" name="form_usuario" method="post">
 				<div class="control-group">
-					<label class="control-label">Username:</label>
+					<label class="control-label">Login:</label>
 					<div class="controls">
-						<input type="text" name="username" id="username" size="15" maxlength="15" placeholder="Username" />
+						<input type="text" name="login" id="login" size="15" maxlength="15" placeholder="Login" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Password:</label>
+					<label class="control-label">Senha:</label>
 					<div class="controls">
-						<input type="password" name="password" id="password" size="10" maxlength="10" placeholder="Password" />
+						<input type="password" name="senha" id="senha" size="10" maxlength="10" placeholder="Senha" />
 					</div>
 				</div>
 				<div class="controls">

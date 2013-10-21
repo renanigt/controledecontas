@@ -59,8 +59,8 @@ public class UsuarioServiceImplTest {
 		Usuario usuarioSalvo = usuarioService.pesquisaPorId(usuario.getId());
 		
 		assertEquals("Nome", "Renan Montenegro", usuarioSalvo.getNome());
-		assertEquals("Username", "montenegro", usuarioSalvo.getUsername());
-		assertEquals("Password", "123", usuarioSalvo.getPassword());
+		assertEquals("Login", "montenegro", usuarioSalvo.getLogin());
+		assertEquals("Senha", "123", usuarioSalvo.getSenha());
 	}
 	
 	@Test
@@ -69,8 +69,8 @@ public class UsuarioServiceImplTest {
 		
 		assertNotNull("Usuário não deve ser nulo.", usuario);
 		assertEquals("Nome", "RENAN MONTENEGRO", usuario.getNome());
-		assertEquals("Username", "RENANIGT", usuario.getUsername());
-		assertEquals("Password", "123", usuario.getPassword());
+		assertEquals("Login", "RENANIGT", usuario.getLogin());
+		assertEquals("Senha", "123", usuario.getSenha());
 	}
 	
 	@Test
@@ -87,24 +87,24 @@ public class UsuarioServiceImplTest {
 		usuarioService.atualiza(usuarioAtualizado());
 		
 		assertEquals("Nome", "Renan Teixeira Lima Verde Montenegro", usuario.getNome());
-		assertEquals("Username", "renanlima", usuario.getUsername());
-		assertEquals("Password", "321", usuario.getPassword());
+		assertEquals("Login", "renanlima", usuario.getLogin());
+		assertEquals("Senha", "321", usuario.getSenha());
 		assertEquals("Saldo", new BigDecimal("50.00"), usuario.getSaldo());
 	}
 	
 	@Test
-	public void deveriaPesquisarPasswordDoUsuario() {
-		String password = usuarioService.pesquisarPassword(ID_VALIDO);
+	public void deveriaPesquisarSenhaDoUsuario() {
+		String senha = usuarioService.pesquisarSenha(ID_VALIDO);
 		
-		assertEquals("Password", "123", password);
+		assertEquals("Senha", "123", senha);
 	}
 	
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("Renan Montenegro");
-		usuario.setUsername("montenegro");
-		usuario.setPassword("123");
+		usuario.setLogin("montenegro");
+		usuario.setSenha("123");
 		
 		return usuario;
 	}
@@ -113,8 +113,8 @@ public class UsuarioServiceImplTest {
 		Usuario usuario = new Usuario();
 		usuario.setId(9999);
 		usuario.setNome("Renan Teixeira Lima Verde Montenegro");
-		usuario.setUsername("renanlima");
-		usuario.setPassword("321");
+		usuario.setLogin("renanlima");
+		usuario.setSenha("321");
 		
 		return usuario;
 	}

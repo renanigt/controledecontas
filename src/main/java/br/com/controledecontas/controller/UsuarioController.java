@@ -83,13 +83,13 @@ public class UsuarioController {
 	}
 	
 	@Post
-	@Path("/usuario/atualizaPassword/salvar")
-	public void atualizaPassword(Usuario usuario, String passwordConfirm, String passwordAtual) {
-		String password = usuarioService.pesquisarPassword(usuario.getId());
+	@Path("/usuario/atualizaSenha/salvar")
+	public void atualizaSenha(Usuario usuario, String senhaConfirm, String senhaAtual) {
+		String senha = usuarioService.pesquisarSenha(usuario.getId());
 		
-		validaPassword(usuario, passwordConfirm);
-		if(!password.equals(passwordAtual)) {
-			validator.add(new ValidationMessage("usuario.passwordAtual.invalido", "Password Atual"));
+		validaSenha(usuario, senhaConfirm);
+		if(!senha.equals(senhaAtual)) {
+			validator.add(new ValidationMessage("usuario.senha.invalida", "Senha Atual"));
 		}
 		validator.onErrorForwardTo(this).edita(usuario.getId());
 		
@@ -106,14 +106,14 @@ public class UsuarioController {
 	private void validaCamposObrigatorios(final Usuario usuario) {
 		validator.checking(new Validations() {{
 			that(usuario.getNome() != null && !usuario.getNome().trim().isEmpty(), "Nome", "campo.nao.vazio");
-			that(usuario.getUsername() != null && !usuario.getUsername().trim().isEmpty(), "Username", "campo.nao.vazio");
-			that(usuario.getPassword() != null && !usuario.getPassword().trim().isEmpty(), "Password", "campo.nao.vazio");
+			that(usuario.getLogin() != null && !usuario.getLogin().trim().isEmpty(), "Login", "campo.nao.vazio");
+			that(usuario.getSenha() != null && !usuario.getSenha().trim().isEmpty(), "Senha", "campo.nao.vazio");
 		}});
 	}
 	
-	private void validaPassword(final Usuario usuario, final String passwordConfirm) {
+	private void validaSenha(final Usuario usuario, final String senhaConfirm) {
 		validator.checking(new Validations() {{
-			that(usuario.getPassword().equals(passwordConfirm), "Confirmar Password", "usuario.password.confima.invalido");
+			that(usuario.getSenha().equals(senhaConfirm), "Confirmar Senha", "usuario.senha.confima.invalido");
 		}});
 	}
 	

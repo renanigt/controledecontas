@@ -26,16 +26,16 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Username:</label>
+					<label class="control-label">Login:</label>
 					<div class="controls">
-						<input type="text" name="usuario.username" id="username" size="15" maxlength="15"
-							value="${usuario.username}" />
+						<input type="text" name="usuario.login" id="login" size="15" maxlength="15"
+							value="${usuario.login}" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Password:</label>
+					<label class="control-label">Senha:</label>
 					<div class="controls">
-						<input type="password" name="usuario.password" id="password" size="10" maxlength="10" />
+						<input type="password" name="usuario.senha" id="senha" size="10" maxlength="10" />
 					</div>
 				</div>
 				<div class="controls">

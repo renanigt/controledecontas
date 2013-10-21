@@ -25,8 +25,8 @@ public class UsuarioSessionTest {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("Renan");
-		usuario.setUsername("renaniguatu");
-		usuario.setPassword("teste");
+		usuario.setLogin("renaniguatu");
+		usuario.setSenha("teste");
 		
 		usuarioSession.setUsuario(usuario);
 		
@@ -48,8 +48,8 @@ public class UsuarioSessionTest {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("Felipe");
-		usuario.setUsername("aquinofb");
-		usuario.setPassword("teste");
+		usuario.setLogin("aquinofb");
+		usuario.setSenha("teste");
 		
 		usuarioSession.setUsuario(usuario);
 	}

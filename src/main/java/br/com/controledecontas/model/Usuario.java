@@ -29,10 +29,10 @@ public class Usuario implements Serializable {
 	private String nome;
 	
 	@Column(name="USERNAME", unique=true, nullable=false)
-	private String username;
+	private String login;
 	
 	@Column(name="PASSWORD", nullable=false)
-	private String password;
+	private String senha;
 	
 	@OneToMany(mappedBy="usuario", fetch=FetchType.LAZY)
 	private List<Conta> contas;
@@ -43,10 +43,10 @@ public class Usuario implements Serializable {
 	@Transient
 	private BigDecimal saldoAnterior;
 
-	public Usuario(String nome, String username, String password, BigDecimal saldo) {
+	public Usuario(String nome, String login, String senha, BigDecimal saldo) {
 		this.nome = nome;
-		this.username = username;
-		this.password = password;
+		this.login = login;
+		this.senha = senha;
 		this.saldo = saldo;
 	}
 	
@@ -69,20 +69,20 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public List<Conta> getContas() {

@@ -46,7 +46,7 @@ public class LoginControllerTest {
 		
 		when(usuarioService.autentica(anyString(), anyString())).thenReturn(usuario);
 		
-		loginController.logar(usuario.getUsername(), usuario.getPassword());
+		loginController.logar(usuario.getLogin(), usuario.getSenha());
 		
 		assertTrue("Deveria estar logado.", usuarioSession.isLogado());
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
@@ -74,8 +74,8 @@ public class LoginControllerTest {
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
-		usuario.setUsername("renanigt");
-		usuario.setPassword("teste");
+		usuario.setLogin("renanigt");
+		usuario.setSenha("teste");
 		
 		return usuario;
 	}

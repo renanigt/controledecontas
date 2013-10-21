@@ -131,14 +131,14 @@ public class UsuarioControllerTest {
 	}
 	
 	@Test
-	public void deveriaAtualizarPasswordUsuario() {
-		Usuario usuario = renanigtPasswordAlterado();
-		String passwordConfirm = "321";
-		String passwordAtual = "123";
+	public void deveriaAtualizarSenhaUsuario() {
+		Usuario usuario = renanigtSenhaAlterada();
+		String senhaConfirm = "321";
+		String senhaAtual = "123";
 		
-		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		when(usuarioService.pesquisarSenha(1)).thenReturn(renanigt().getSenha());
 		
-		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
+		usuarioController.atualizaSenha(usuario, senhaConfirm, senhaAtual);
 		verify(usuarioService).atualiza(usuario);
 
 		assertEquals(localization.getMessage("usuario.atualizado.sucesso"), result.included().get("notice"));
@@ -146,48 +146,48 @@ public class UsuarioControllerTest {
 	}
 	
 	@Test
-	public void naoDeveriaAtualizarPasswordUsuarioException() {
-		Usuario usuario = renanigtPasswordAlterado();
-		String passwordConfirm = "321";
-		String passwordAtual = "123";
+	public void naoDeveriaAtualizarSenhaUsuarioException() {
+		Usuario usuario = renanigtSenhaAlterada();
+		String senhaConfirm = "321";
+		String senhaAtual = "123";
 		
 		doThrow(new RuntimeException()).when(usuarioService).atualiza(usuario);
-		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		when(usuarioService.pesquisarSenha(1)).thenReturn(renanigt().getSenha());
 		
-		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
+		usuarioController.atualizaSenha(usuario, senhaConfirm, senhaAtual);
 		
 		assertTrue("Deveria conter mensagem de erro.", result.included().containsKey("erros"));
 		assertFalse("Não deveria conter mensagem de sucesso.", result.included().containsKey("notice"));
 	}
 	
 	@Test(expected=ValidationException.class)
-	public void naoDevriaAtualizarPasswordUsuarioAtualDiferente() {
-		Usuario usuario = renanigtPasswordAlterado();
-		String passwordConfirm = "321";
-		String passwordAtual = "124";
+	public void naoDeveriaAtualizarSenhaUsuarioAtualDiferente() {
+		Usuario usuario = renanigtSenhaAlterada();
+		String senhaConfirm = "321";
+		String senhaAtual = "124";
 		
-		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		when(usuarioService.pesquisarSenha(1)).thenReturn(renanigt().getSenha());
 		
-		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
+		usuarioController.atualizaSenha(usuario, senhaConfirm, senhaAtual);
 	}
 
 	@Test(expected=ValidationException.class)
-	public void naoDevriaAtualizarPasswordUsuarioConfirmDiferente() {
-		Usuario usuario = renanigtPasswordAlterado();
-		String passwordConfirm = "322";
-		String passwordAtual = "123";
+	public void naoDeveriaAtualizarSenhaUsuarioConfirmDiferente() {
+		Usuario usuario = renanigtSenhaAlterada();
+		String senhaConfirm = "322";
+		String senhaAtual = "123";
 		
-		when(usuarioService.pesquisarPassword(1)).thenReturn(renanigt().getPassword());
+		when(usuarioService.pesquisarSenha(1)).thenReturn(renanigt().getSenha());
 		
-		usuarioController.atualizaPassword(usuario, passwordConfirm, passwordAtual);
+		usuarioController.atualizaSenha(usuario, senhaConfirm, senhaAtual);
 	}
 	
 	private Usuario aquinofb() {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("Felipe Aquino");
-		usuario.setUsername("aquinofb");
-		usuario.setPassword("321");
+		usuario.setLogin("aquinofb");
+		usuario.setSenha("321");
 		
 		return usuario;
 	}
@@ -196,8 +196,8 @@ public class UsuarioControllerTest {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome("");
-		usuario.setUsername("");
-		usuario.setPassword("");
+		usuario.setLogin("");
+		usuario.setSenha("");
 		
 		return usuario;
 	}
@@ -207,19 +207,19 @@ public class UsuarioControllerTest {
 		
 		usuario.setId(1);
 		usuario.setNome("Renan Montenegro");
-		usuario.setUsername("renanigt");
-		usuario.setPassword("123");
+		usuario.setLogin("renanigt");
+		usuario.setSenha("123");
 		
 		return usuario;
 	}
 
-	private Usuario renanigtPasswordAlterado() {
+	private Usuario renanigtSenhaAlterada() {
 		Usuario usuario = new Usuario();
 		
 		usuario.setId(1);
 		usuario.setNome("Renan Montenegro");
-		usuario.setUsername("renanigt");
-		usuario.setPassword("321");
+		usuario.setLogin("renanigt");
+		usuario.setSenha("321");
 		
 		return usuario;
 	}

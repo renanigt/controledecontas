@@ -27,19 +27,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void atualiza(Usuario usuario) {
 		Usuario usuarioAlterado = this.pesquisaPorId(usuario.getId());
 		usuarioAlterado.setNome(usuario.getNome());
-		usuarioAlterado.setUsername(usuario.getUsername());
-		usuarioAlterado.setPassword(usuario.getPassword());
+		usuarioAlterado.setLogin(usuario.getLogin());
+		usuarioAlterado.setSenha(usuario.getSenha());
 		
 		entityManager.merge(this.pesquisaPorId(usuario.getId()));
 	}
 	
-	public Usuario autentica(String username, String password) {
+	public Usuario autentica(String login, String senha) {
 		String hql = "from Usuario where username = :username and password = :password";
 		
 		Query query = entityManager.createQuery(hql);
 	
-		query.setParameter("username", username);
-		query.setParameter("password", password);
+		query.setParameter("username", login);
+		query.setParameter("password", senha);
 		
 		try {
 			return (Usuario) query.getSingleResult();
@@ -48,9 +48,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 
-	@Override
-	public String pesquisarPassword(Integer id) {
-		String hql = "select password from Usuario where id = :id";
+	public String pesquisarSenha(Integer id) {
+		String hql = "select senha from Usuario where id = :id";
 		
 		Query query = entityManager.createQuery(hql);
 		

@@ -50,7 +50,7 @@
 						</form>
 						<ul class="nav pull-right">
 							<li class="dropdown">
-				                <a href="#" class="dropdown-toggle" data-toggle="dropdown">${usuarioSession.usuario.username}<b class="caret"></b></a>
+				                <a href="#" class="dropdown-toggle" data-toggle="dropdown">${usuarioSession.usuario.login}<b class="caret"></b></a>
 				                <ul class="dropdown-menu">
 					                <li><a href="<c:url value="/usuario/atualiza/${usuarioSession.usuario.id}" />">Alterar Perfil</a></li>
 					                <li><a href="#">Alterar Senha</a></li>

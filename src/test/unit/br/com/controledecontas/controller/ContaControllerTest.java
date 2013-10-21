@@ -250,8 +250,8 @@ public class ContaControllerTest {
 		
 		usuario.setId(1);
 		usuario.setNome("Renan");
-		usuario.setUsername("renanigt");
-		usuario.setPassword("teste");
+		usuario.setLogin("renanigt");
+		usuario.setSenha("teste");
 		
 		return usuario;
 	}
