@@ -21,4 +21,4 @@ Dar build no projeto
 * Rode o comando:
 
         ./gradlew build
-* O .war ficará na pasta dentro da pasta do projeto em **/build/libs**
+* O .war ficará dentro da pasta do projeto em **/build/libs**
