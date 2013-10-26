@@ -52,23 +52,19 @@ public class UsuarioControllerTest {
 	}
 	
 	@Test
-	public void deveriaAbrirPaginaDeAtualizacaoComUsuarioLogado() {
-		when(usuarioSession.isLogado()).thenReturn(true);
-		
-		usuarioController.edita(1);
+	public void deveriaAbrirPaginaDeAtualizacaoPerfilComUsuarioLogado() {
+		usuarioController.editaPerfil();
 		
 		assertTrue("Deve conter um usuario", result.included().containsKey("usuario"));
 	}
 
 	@Test
-	public void naoDeveriaAbrirPaginaDeAtualizacaoSemUsuarioLogado() {
-		when(usuarioSession.isLogado()).thenReturn(false);
+	public void deveriaAbrirPaginaDeAtualizacaoSenhaComUsuarioLogado() {
+		usuarioController.editaSenha();
 		
-		usuarioController.edita(1);
-		
-		assertFalse("Deve conter um usuario", result.included().containsKey("usuario"));
+		assertTrue("Deve conter um usuario", result.included().containsKey("usuario"));
 	}
-	
+
 	@Test
 	public void deveriaSalvarUsuario() {
 		Usuario usuario = aquinofb();

@@ -40,13 +40,15 @@ public class UsuarioController {
 	}
 
 	@Get
-	@Path("/usuario/atualiza/{id}")
-	public void edita(Integer id) {
-		if(usuarioSession.isLogado()) {
+	@Path("/usuario/atualizaPerfil")
+	public void editaPerfil() {
 			result.include("usuario", usuarioSession.getUsuario());
-		} else {
-			result.redirectTo(IndexController.class).index();
-		}
+	}
+	
+	@Get
+	@Path("/usuario/atualizaSenha")
+	public void editaSenha() {
+		result.include("usuario", usuarioSession.getUsuario());
 	}
 	
 	@Post
@@ -69,7 +71,7 @@ public class UsuarioController {
 	@Path("/usuario/atualizaPerfil/salvar")
 	public void atualizaPerfil(Usuario usuario) {
 		validaCamposObrigatorios(usuario);
-		validator.onErrorForwardTo(this).edita(usuario.getId());
+		validator.onErrorForwardTo(this).editaPerfil();
 		
 		try {
 			usuarioService.atualiza(usuario);
@@ -77,7 +79,7 @@ public class UsuarioController {
 			result.redirectTo(ContaController.class).index();
 		} catch (Exception e) {
 			result.include("erros", e);
-			result.forwardTo(this).edita(usuario.getId());
+			result.forwardTo(this).editaPerfil();
 		}
 		
 	}
@@ -89,9 +91,9 @@ public class UsuarioController {
 		
 		validaSenha(usuario, senhaConfirm);
 		if(!senha.equals(senhaAtual)) {
-			validator.add(new ValidationMessage("usuario.senha.invalida", "Senha Atual"));
+			validator.add(new ValidationMessage(localization.getMessage("usuario.senha.invalida"), "Senha Atual"));
 		}
-		validator.onErrorForwardTo(this).edita(usuario.getId());
+		validator.onErrorForwardTo(this).editaSenha();
 		
 		try {
 			usuarioService.atualiza(usuario);
@@ -99,7 +101,7 @@ public class UsuarioController {
 			result.redirectTo(ContaController.class).index();
 		} catch (Exception e) {
 			result.include("erros", e);
-			result.forwardTo(this).edita(usuario.getId());
+			result.forwardTo(this).editaSenha();
 		}
 	}
 
@@ -116,5 +118,5 @@ public class UsuarioController {
 			that(usuario.getSenha().equals(senhaConfirm), "Confirmar Senha", "usuario.senha.confima.invalido");
 		}});
 	}
-	
+
 }
