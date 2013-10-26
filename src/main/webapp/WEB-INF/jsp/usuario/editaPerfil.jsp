@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>Alterar perfil !</title>
+<title>Alterar perfil</title>
 </head>
 <body>
 	<div class="container container-page">
