@@ -55,11 +55,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		
 		query.setParameter("id", id);
 		
-		try {
-			return query.getSingleResult().toString();
-		} catch (NoResultException e) {
-			return null;
-		}
+		return query.getSingleResult().toString();
 	}
 
 	public Usuario pesquisarPorLogin(String login) {
