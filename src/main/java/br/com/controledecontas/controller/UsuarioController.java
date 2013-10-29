@@ -55,6 +55,11 @@ public class UsuarioController {
 	@Path("/usuario/novo/salvar")
 	public void salva(Usuario usuario) {
 		validaCamposObrigatorios(usuario);
+		
+		if(usuarioService.pesquisarPorLogin(usuario.getLogin()) != null) {
+			validator.add(new ValidationMessage(localization.getMessage("usuario.login.existente"), "Login"));
+		}
+		
 		validator.onErrorForwardTo(this).novo();
 		
 		try {
@@ -71,6 +76,13 @@ public class UsuarioController {
 	@Path("/usuario/atualizaPerfil/salvar")
 	public void atualizaPerfil(Usuario usuario) {
 		validaCamposObrigatorios(usuario);
+		
+		Usuario usuarioRetornado = usuarioService.pesquisarPorLogin(usuario.getLogin());
+		
+		if(usuarioRetornado != null && usuarioRetornado.getId() != usuario.getId()) {
+			validator.add(new ValidationMessage(localization.getMessage("usuario.login.existente"), "Login"));
+		}
+		
 		validator.onErrorForwardTo(this).editaPerfil();
 		
 		try {

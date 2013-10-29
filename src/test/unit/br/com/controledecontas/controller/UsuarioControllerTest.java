@@ -69,6 +69,8 @@ public class UsuarioControllerTest {
 	public void deveriaSalvarUsuario() {
 		Usuario usuario = aquinofb();
 		
+		when(usuarioService.pesquisarPorLogin(usuario.getLogin())).thenReturn(null);
+		
 		usuarioController.salva(usuario);
 		
 		verify(usuarioService).salva(usuario);
@@ -84,9 +86,20 @@ public class UsuarioControllerTest {
 		usuarioController.salva(usuario);
 	}
 	
+	@Test(expected=ValidationException.class)
+	public void naoDeveriaSalvarUsuarioComLoginJaExistente() {
+		Usuario usuario = aquinofb();
+		
+		when(usuarioService.pesquisarPorLogin(usuario.getLogin())).thenReturn(loginIgualAquinoFb());
+		
+		usuarioController.salva(usuario);
+	}
+	
 	@Test
 	public void naoDeveriaSalvarUsuarioException() {
 		Usuario usuario = aquinofb();
+		
+		when(usuarioService.pesquisarPorLogin(usuario.getLogin())).thenReturn(null);
 		
 		doThrow(new RuntimeException()).when(usuarioService).salva(usuario);
 		
@@ -100,16 +113,42 @@ public class UsuarioControllerTest {
 	public void deveriaAtualizarPerfilDoUsuario() {
 		Usuario usuario = renanigt();
 		
+		when(usuarioService.pesquisarPorLogin(usuario.getLogin())).thenReturn(null);
+		
 		usuarioController.atualizaPerfil(usuario);
 		verify(usuarioService).atualiza(usuario);
 		
 		assertEquals(localization.getMessage("usuario.atualizado.sucesso"), result.included().get("notice"));
 		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
 	}
-	
+
+	@Test
+	public void deveriaAtualizarPerfilDoUsuarioLoginIgualIdIgual() {
+		Usuario usuario = renanigt();
+		
+		when(usuarioService.pesquisarPorLogin(usuario.getLogin())).thenReturn(usuario);
+		
+		usuarioController.atualizaPerfil(usuario);
+		verify(usuarioService).atualiza(usuario);
+		
+		assertEquals(localization.getMessage("usuario.atualizado.sucesso"), result.included().get("notice"));
+		assertFalse("Não deve conter erros.", result.included().containsKey("erros"));
+	}
+
 	@Test(expected=ValidationException.class)
 	public void naoDeveriaAtualizarUsuarioVazio() {
 		Usuario usuario = criaUsuarioVazio();
+		
+		usuarioController.atualizaPerfil(usuario);
+	}
+	
+	@Test(expected=ValidationException.class)
+	public void naoDeveriaAtualizarUsuarioComLoginJaExistenteIdDiferente() {
+		Usuario usuario = renanigt();
+		Usuario usuarioIdDiferente = renanigt();
+		usuarioIdDiferente.setId(2);
+		
+		when(usuarioService.pesquisarPorLogin(usuario.getLogin())).thenReturn(usuarioIdDiferente);
 		
 		usuarioController.atualizaPerfil(usuario);
 	}
@@ -118,6 +157,7 @@ public class UsuarioControllerTest {
 	public void naoDeveriaAtualizarUsuarioException() {
 		Usuario usuario = renanigt();
 		
+		when(usuarioService.pesquisarPorLogin(usuario.getLogin())).thenReturn(null);
 		doThrow(new RuntimeException()).when(usuarioService).atualiza(usuario);
 		
 		usuarioController.atualizaPerfil(usuario);
@@ -187,6 +227,16 @@ public class UsuarioControllerTest {
 		
 		return usuario;
 	}
+
+	private Usuario loginIgualAquinoFb() {
+		Usuario usuario = new Usuario();
+		
+		usuario.setNome("Fulano");
+		usuario.setLogin("aquinofb");
+		usuario.setSenha("123");
+		
+		return usuario;
+	}
 	
 	private Usuario criaUsuarioVazio() {
 		Usuario usuario = new Usuario();
@@ -219,5 +269,5 @@ public class UsuarioControllerTest {
 		
 		return usuario;
 	}
-
+	
 }

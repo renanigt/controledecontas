@@ -14,4 +14,6 @@ public interface UsuarioService {
 
 	String pesquisarSenha(Integer id);
 
+	Usuario pesquisarPorLogin(String login);
+
 }

@@ -62,5 +62,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 
+	public Usuario pesquisarPorLogin(String login) {
+		String hql = "from Usuario where username = :username";
+		
+		Query query = entityManager.createQuery(hql);
+		
+		query.setParameter("username", login);
+		
+		try {
+			return (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
 	
 }

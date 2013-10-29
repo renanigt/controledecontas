@@ -99,6 +99,24 @@ public class UsuarioServiceImplTest {
 		assertEquals("Senha", "123", senha);
 	}
 	
+	@Test
+	public void deveriaPesquisarUsuarioPorLogin() {
+		String login = "RENANIGT";
+		
+		Usuario usuario = usuarioService.pesquisarPorLogin(login);
+		
+		assertNotNull("Usuario não deve ser nulo", usuario);
+	}
+
+	@Test
+	public void deveriaRetornarNuloAoPesquisarUsuarioPorLoginInexistente() {
+		String login = "HJKL";
+		
+		Usuario usuario = usuarioService.pesquisarPorLogin(login);
+		
+		assertNull("Usuario deve ser nulo", usuario);
+	}
+	
 	private Usuario criaUsuario() {
 		Usuario usuario = new Usuario();
 		
