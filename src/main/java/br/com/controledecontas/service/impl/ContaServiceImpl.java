@@ -101,7 +101,6 @@ public class ContaServiceImpl implements ContaService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Conta> pesquisarPorPeriodo(Usuario usuario, Date dataInicio, Date dataFim) {
 		if (usuario == null) {
 			return Collections.emptyList();
