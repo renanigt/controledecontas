@@ -45,8 +45,7 @@
 						<td><fmt:formatNumber value="${conta.valor}" minFractionDigits="2" type="currency"/></td>
 						<td class="acoes">
 							<a href="<c:url value='/conta/atualiza/${conta.id}' />"><img title="Editar" src=<c:url value='/images/editar.png' /> /></a>
-							<input type="hidden" id='urlDelete${index.index}' value="<c:url value='/conta/deleta/${conta.id}' />" />
-							<a href="#" id="delete${index.index}"><img title="Deletar" src="<c:url value='/images/delete.png' />" /></a>
+							<a class="delete" href="<c:url value='/conta/deleta/${conta.id}' />"><img title="Deletar" src="<c:url value='/images/delete.png' />" /></a>
 						</td>
 					</tr>
 				</c:forEach>

@@ -74,13 +74,13 @@
 				<div class="control-group">
 					<label class="control-label">Data Inicial:</label>
 					<div class="controls">
-						<input type="text" name="dataInicio" />
+						<input type="text" id="dataInicio" name="dataInicio" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">Data Final:</label>
 					<div class="controls">
-						<input type="text" name="dataFim" />
+						<input type="text" id="dataFim" name="dataFim" />
 					</div>
 				</div>
 				<div class="controls">
@@ -93,5 +93,7 @@
 	<decorator:body />
 	
 	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
+	<script src="<c:url value="/js/jquery.maskedinput.min.js"/>"></script>
+	<script src="<c:url value="/js/layout.js"/>"></script>
 </body>
 </html>
