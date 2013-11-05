@@ -85,6 +85,6 @@
 		</table>
 	</div>
 	
-	<script src="<c:url value="/js/conta/conta.js"/>"></script>
+	<script src="<c:url value="/js/conta/listagem.js"/>"></script>
 </body>
 </html>
