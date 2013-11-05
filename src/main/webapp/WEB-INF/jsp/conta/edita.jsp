@@ -69,5 +69,6 @@
 		</fieldset>
 	</div>
 	
+	<script src="<c:url value="/js/conta/formulario.js"/>"></script>
 </body>
 </html>
