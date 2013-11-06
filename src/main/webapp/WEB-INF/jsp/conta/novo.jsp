@@ -55,5 +55,6 @@
 	</div>
 	
 	<script src="<c:url value="/js/conta/formulario.js"/>"></script>
+	<script src="<c:url value="/js/jquery.maskMoney.js"/>"></script>
 </body>
 </html>

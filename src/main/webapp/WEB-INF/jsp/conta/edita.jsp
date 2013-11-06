@@ -52,7 +52,7 @@
 					<label class="control-label">Valor:</label>
 					<div class="controls">
 						<input type="text" name="conta.valor" id="valor" size="15" maxlength="15"
-							value="${conta.valor}" />
+							value="<fmt:formatNumber value="${conta.valor}" minFractionDigits="2" type="number"/>" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -70,5 +70,6 @@
 	</div>
 	
 	<script src="<c:url value="/js/conta/formulario.js"/>"></script>
+	<script src="<c:url value="/js/jquery.maskMoney.js"/>"></script>
 </body>
 </html>
