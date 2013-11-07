@@ -73,7 +73,7 @@
 					</c:choose>
 						<td>${conta.descricao}</td>
 						<td>${conta.tipoConta.descricao}</td>
-						<td>${conta.data}</td>
+						<td><fmt:formatDate value='${conta.data}' type='date' pattern='dd/MM/yyyy'/></td>
 						<td><fmt:formatNumber value="${conta.valor}" minFractionDigits="2" type="currency"/></td>
 						<td class="acoes">
 							<a href="<c:url value='/conta/atualiza/${conta.id}' />"><img title="Editar" src=<c:url value='/images/editar.png' /> /></a>
