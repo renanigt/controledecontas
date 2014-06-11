@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	$(".close").click(function() {
-		$(this).parent().fadeOut("slosw");
+		$(this).parent().fadeOut("slow");
 	});
 	
 	$(".acoes .delete").click(function(event) {
