@@ -2,6 +2,8 @@ apply plugin: "java"
 apply plugin: "eclipse-wtp"
 apply plugin: "war"
 
+sourceCompatibility = 1.7
+
 repositories {
 	mavenCentral()
 }
