@@ -45,7 +45,7 @@ public class UsuarioControllerTest {
 	}
 
 	@Test
-	public void deveriaAbrirPaginaDeCadastroDeUsuario() {
+	public void deveriaAbrirPaginaDeCadastro() {
 		usuarioController.novo();
 		
 		assertFalse("Não deveria conter erros.", result.included().containsKey("erros"));
