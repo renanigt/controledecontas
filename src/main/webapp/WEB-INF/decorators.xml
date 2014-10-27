@@ -4,6 +4,6 @@
 
     <decorator name="layout" page="layout.jsp">
 	  <pattern>/*</pattern>
-	</decorator>
+    </decorator>
     
 </decorators>
