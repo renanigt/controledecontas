@@ -29,7 +29,7 @@ def springDependencies = ["spring-aop", "spring-asm",
 	"spring-context", "spring-core",
 	"spring-expression", "spring-jdbc",
 	"spring-orm", "spring-test",
-"spring-test", "spring-web"]
+	"spring-test", "spring-web"]
 
 def hibernateDependencies = ["hibernate-core", "hibernate-entitymanager"]
 
